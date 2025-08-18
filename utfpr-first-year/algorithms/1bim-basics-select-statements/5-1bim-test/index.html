@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> One Piece bounty</title>
+
+</head>
+<body>
+    <h1> Marine headquarters</h1>
+    <h2> Bounty agency</h2>
+
+    <form id="bountyForm">
+        <fieldset>
+            <legend> Information</legend>
+            <label for="marineOfficer"> Marine officer</label>
+            <input type="text" id="marineOfficer" placeholder="name"> <br>
+
+            <label for="capturedPirate"> Captured pirate</label>
+            <input type="text" id="capturedPirate" placeholder="name"> <br>
+
+            <label for="pirateBounty"> Pirate bounty</label>
+            <input type="number" id="pirateBounty" step="0.1" value="0" min="0"> <br>
+
+            <label for="monthNumber"> Month number</label>
+            <input type="number" id="monthNumber" step="1" value="1" min="1" max="12"> <br>
+
+        </fieldset>
+
+        <input id="formSubmit" type="submit" value="Obtain final result">
+
+    </form>
+
+    <h3> Result</h3>
+    <section class="rectangleCss" id="outputSection">
+        <!-- result goes here-->
+
+    </section>
+
+    <script src="index.js"></script>
+
+</body>
+</html>

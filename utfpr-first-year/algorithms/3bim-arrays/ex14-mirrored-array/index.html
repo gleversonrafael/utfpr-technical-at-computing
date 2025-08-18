@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-Mirrored Array</title>
+
+</head>
+<body>
+    <main>
+        <h1> Mirrored matrix</h1>
+    
+        <label for="lines"> Number of lines</label>
+        <input id="lines" type="number"> <br>
+    
+        <label for="columns"> Number of columns</label>
+        <input id="columns" type="number"> <br>
+    
+        <input id="generateMatrixHTML" type="button" value="Generate matrix" onclick="generateMatrix()">
+    
+        <hr>
+    
+        <label for="newNumber"> Insert number</label>
+        <input id="newNumber" type="number"> <br>
+    
+        <input id="insertNumberHTML" type="button" value="Insert number" onclick="insertNumber()">
+    
+        <hr>
+    
+        <section>
+            <p id="output">
+                <!-- Matrix here ... -->
+            </p>
+    
+        </section>
+    
+    </main>
+
+    <script src="app.js"></script>
+    
+</body>
+</html>

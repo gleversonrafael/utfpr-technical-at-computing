@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Categorização </title>
+    
+</head>
+<body>
+    <form id="mainForm" onsubmit="callMainFunction(event)">
+        <fieldset>
+            <legend> Dados pessoais</legend>
+            <label for="userName"> Nome</label>
+            <input id="userName" type="text">
+
+            <label for="userAge"> Idade</label>
+            <input id="userAge" type="number">
+
+            <br>
+
+            <label for="userGender"> Gênero</label>
+
+            <select id="userGender">
+                <option value="m"> Masculino </option>
+                <option value="f"> Feminino </option>
+
+            </select>
+
+        </fieldset>
+
+        <fieldset>
+            <legend> Dados esportivos</legend>
+
+            <label for="userSport"> Modalidade</label>
+            <select id="userSport">
+                <option value="Futsal"> Futsal</option>
+                <option value="Basquete"> Basquete</option>
+
+            </select>
+
+        </fieldset>
+
+        <input type="submit" value="Categorizar">
+
+    </form>
+
+    <section>
+        <p> Resultado</p>
+        <span id="output"> ...</span>
+
+    </section>
+
+    <script src="index.js"></script>
+</body>
+</html>

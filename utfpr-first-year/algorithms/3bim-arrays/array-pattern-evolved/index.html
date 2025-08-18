@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> AL15 - Matrizes </title>
+
+
+</head>
+<body>
+    <h1> Array - Pattern</h1>
+
+    <main>
+        <h2> Form</h2>
+
+        <form>
+            <fieldset>
+                <legend> Matrix data</legend>
+
+                <label for="linesNumber">Lines</label>
+                <input type="number" id="linesNumber">
+
+                <br>
+
+                <label for="columnsNumber">Columns</label>
+                <input type="number" id="columnsNumber">
+                
+                <p id="generateMatrixFeedback">Feedback: </p>
+
+                <input id="generateMatrix" type="button" value="Generate">
+
+            </fieldset>
+
+            <fieldset>
+                <legend> Data in the matrix</legend>
+
+                <label for="insertDataHTML"> Data (number)</label>
+                <input type="number" id="insertDataHTML">
+
+                <br>
+
+                <input id="insertNumberHTML" type="button" value="Insert">
+
+            </fieldset>
+
+            <fieldset>
+                <legend> Other options</legend>
+
+            </fieldset>
+        
+        </form>
+
+    </main>
+
+    <section id="outputSection">
+        <h2> Output</h2>
+        <div></div>
+
+    </section>
+
+    <script src="app.js"></script>
+    
+</body>
+</html>

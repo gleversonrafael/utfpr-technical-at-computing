@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odd Magic square</title>
+    <link rel="stylesheet" href="app.css">
+
+</head>
+<body>
+    <!--
+    19) Faça um programa para gerar um quadrado mágico em uma matriz quadrada de ordem ímpar. O número 1 vai na última coluna na linha do meio. Depois aplica a regra uma linha para baixo, uma coluna para direita e se a célula estiver vazia, coloca o próximo número. Caso haja uma coincidência, considerando o local da coincidência contar duas linhas para baixo e uma coluna para direita. Quando “sai” da matriz vai para o outro lado (por exemplo, o número 2 iria na coluna 4, como ela não existe,volta para a coluna 1).
+
+    Se somar os valores de qualquer linha, coluna ou diagonal o resultado é sempre 15 (para ordem 3)
+    -->
+
+    <main>
+        <h1> Magic square</h1>
+
+        <form id="magicSquareForm">
+            <h2> Data </h2>
+
+            <label for="matrixOrder"> Order of matrix: </label>
+            <input id="matrixOrder" type="number" step="1">
+
+            <input type="submit" value="Generate">
+
+        </form>
+
+        <section class="feedbackSection">
+            <h2> Results</h2>
+            <p> Matrix order</p>
+
+            <div id="resultingMatrix" class="flex">
+                <div class="flex"> 1</div>
+                <div class="flex"> 2 </div>
+                <div> 3</div>
+                <div></div>
+
+            </div>
+
+        </section>
+
+    </main>
+    
+    <script src="app.js"></script>
+
+</body>
+</html>

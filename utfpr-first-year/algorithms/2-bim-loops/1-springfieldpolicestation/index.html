@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>27dps</title>
+</head>
+<body>
+    <h1> Departamento de polícia de Springfield</h1>
+    <h2> Agência de ocorrências</h2>
+
+    <h1 style="color: red; font-size: 40px;"> Consertar o homer e o nível 3</h1>
+
+    <!-- table -->
+    <section>
+        <table id="callsTable" style="border: 1px solid #000;">
+            <thead>
+                <tr>
+                    <td> Policial</td>
+                    <td> Número de ocorrências </td>
+                </tr>
+    
+            </thead>
+            
+            <tbody>
+                <tr id="chiefClancyOutput">
+                    <th> Chefe Clancy</th>
+                    <td class="callsNumber"> 0</td>
+    
+                </tr>
+
+                <tr id="eddieOutput">
+                    <th> Eddie</th>
+                    <td class="callsNumber"> 0</td>
+    
+                </tr>
+                
+                <tr id="louOutput">
+                    <th> Lou</th>
+                    <td class="callsNumber"> 0</td>
+    
+                </tr>
+    
+            </tbody>
+    
+        </table>
+
+        <p id="homerCallsOutput"> Número de ocorrências do tipo Homer: <span> 0</span></p>
+        <p id="directionCallsOutput"> Porcentagem de Direção Perigosa em relação ao total: <span>0</span> </p>
+
+    </section>
+
+    <!-- register call -->
+    <h2> Registrar ocorrência </h2>
+
+    <form id="registerCallForm">
+        <fieldset>
+            <legend> Tipo de ocorrência</legend>
+
+            <input type="radio" name="callType" id="dangerousDirectionCallType" value="dangerousDirection">
+            <label for="dangerousDirectionCallType"> Direção Perigosa</label>
+
+            <input type="radio" name="callType" id="manyNoiseCallType" value="manyNoise">
+            <label for="manyNoiseCallType"> Barulho</label>
+
+            <input type="radio" name="callType" id="drunkCallType" value="drunk">
+            <label for="drunkCallType"> Bebedeira</label>
+
+            <input type="radio" name="callType" id="homerCallType" value="homer">
+            <label for="homerCallType"> Homer</label>
+
+        </fieldset>
+
+        <fieldset>
+            <legend> Nível da ocorrência</legend>
+
+            <input type="radio" name="callLevel" id="ligthCall" value="1">
+            <label for="lightLevel"> Baixo</label>
+
+            <input type="radio" name="callLevel" id="normalCall" value="2">
+            <label for="normalLevel"> Médio</label>
+
+            <input type="radio" name="callLevel" id="dangerousCall" value="3">
+            <label for="dangerousLevel"> Alto</label>
+
+        </fieldset>
+
+        <input type="submit" value="Registrar">
+
+    </form>
+        
+    <abbr title=" A delegacia de polícia da pequena cidade de Springfield conta
+    com somente 3 policiais: o chefe de polícia Clancy, e os policiais
+    Eddie e Lou. Como é de se esperar, esse pequeno contingente de
+    policiais não consegue atender imediatamente a todos os chamados
+    policiais. Portanto, você foi contratado para criar um sistema de
+    atendimento, de maneira que cada um dos policiais fique com um
+    conjunto equilibrado de chamados. Considere os requisitos: Cada
+    ocorrência deve ser de um tipo: Direção Perigosa, Barulho,
+    Bebedeira, Homer; Cada ocorrência deve ser de um nível de
+    gravidade: Baixo, Médio, Alto; Toda ocorrência do tipo Homer tem
+    nível de gravidade alto; Novas ocorrências devem ser atribuídas
+    ao policial com menos ocorrências; Ocorrências do tipo Homer
+    sempre são atribuídas ao chefe de polícia; A cada registro de
+    ocorrência o sistema deve imprimir um resumo da quantidade de
+    ocorrências de cada policial, o número de ocorrências do tipo
+    Homer e o percentual de ocorrências do tipo “Direção Perigosa” em
+    relação do total de ocorrências cadastradas." style="display:block; margin-top: 20px"> Sobre o exercício</abbr>
+
+    <!-- other data -->
+    <script src="index.js"></script>
+
+</body>
+</html>

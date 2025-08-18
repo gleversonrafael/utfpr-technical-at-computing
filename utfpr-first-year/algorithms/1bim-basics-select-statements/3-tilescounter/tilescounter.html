@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+	<title> 5&#41; Cálculo dos pisos</title>
+
+</head>
+
+<body>
+	<h1> 5&#41; Cálculo de ladrilhos necessários </h1>	
+    <p> Esse programa analisa uma área retangular ou quadrada, com medidas dadas em metros, e medidas de uma peça de um piso, com valores referenciados em centímetros, para calcular quantas dessas peças serão necessárias para que o ambiente seja preenchido e ainda reste 10% para possíveis recortes e reajustes na estrutura futuros. </p>
+    
+    <!-- Entrada -->
+    <h2> Dimensões do ambiente </h2>
+    <label for="ambientHeight"> Comprimento, em metros</label>
+    <input id="ambientHeight" type="number"> <br>
+    
+    <label for="ambientWidth"> Largura, em metros</label>
+    <input id="ambientWidth" type="number"> <br>
+    
+    
+   	<h2> Dimensões de cada peça do piso</h2>
+    <label for="floorHeight"> Altura de cada peça, em centímetros </label>
+    <input id="floorHeight" type="number"> <br>
+    
+    <label for="floorWidth"> Largura de cada peça, em centímetros</label>
+    <input id="floorWidth" type="number"> <br>
+    
+    <!-- Processamento -->
+    <input id="calculateNecessaryTilesButton" type="button" value="Calcular" onclick="calculateNecessaryTiles()">
+
+    <!-- Saída -->
+    <p id="resultParagraph"> Ladrilhos necessários: <span id="result"> </span> </p>
+
+
+	<script src="tilescounter.js"></script>
+
+</body>
+</html>

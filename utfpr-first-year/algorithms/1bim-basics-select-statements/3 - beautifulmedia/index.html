@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <h1> CalculaMedia</h1>
+
+    <form id="mediaForm">
+        <!-- Values-->
+        <fieldset>
+            <legend> Valores</legend>
+
+            <label for="xValue"> X&#41; </label>
+            <input type="text" id="xVaue" class="value"> <br>
+            
+            <label for="yValue"> Y&#41; </label>
+            <input type="text" id="yValue" class="value"> <br>
+
+            <label for="zValue"> Z&#41;</label>
+            <input type="text" id="zValue" class="value">
+        
+        </fieldset>
+
+        <!-- Medias -->
+        <fieldset>
+            <legend> Médias </legend>
+
+            <label for="geometricOutput"> 
+                <abbr id="geometricOutput" title="Raiz cúbica de (x*y*z)"> Geométrica: <span></span> </abbr>
+
+            </label> <br>
+
+            <label for="weightedOutput"> 
+                <abbr id="weightedOutput" title="(x + 2y + 3z)/6"> Ponderada: <span></span>
+
+                </abbr>
+            
+            </label> <br>
+
+            <label for="harmonicOutput"> 
+                <abbr id="harmonicOutput" title="1/((1+x) + (1+y) + (1+z))"> Harmônica: <span></span> </abbr>
+            
+            </label> <br>
+
+            <label for="arithmeticOutput"> 
+                <abbr id="arithmeticOutput" title="(x + y + z)/3"> Aritmética: <span></span></abbr>
+            
+            </label> <br>
+            
+        </fieldset>
+        
+        <!-- Submit-->
+        <input type="submit" value="Calcular">
+
+    </form>
+
+    <script src="index.js"></script>
+
+</body>
+</html>
