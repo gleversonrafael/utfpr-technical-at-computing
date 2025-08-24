@@ -26,14 +26,14 @@ class matrixStructure {
             outputHTML.innerHTML = "Lines or columns are out of bounds.";
         }
     
-        function dataExists(thisFunction) {
+        function dataExists(thisObject) {
             let response;
 
             try {        
-                if(isNaN(thisFunction.lines) || isNaN(thisFunction.columns)) 
+                if(isNaN(thisObject.lines) || isNaN(thisObject.columns)) 
                     throw new Error(NaN);
                 
-                else if(thisFunction.lines <= 0 || thisFunction.columns <= 0)
+                else if(thisObject.lines <= 0 || thisObject.columns <= 0)
                     throw new Error()
         
                 else 
@@ -63,8 +63,18 @@ class matrixStructure {
 }
 
 function updateOutput() {
-    console.log(currentMatrix);
-    console.log(currentMatrix.matrix);
+    const OUTPUT = document.querySelector("#outputSection > div");
+    let generatedHTML = "";
+
+    for(let line = 0; line < currentMatrix.lines; line++) {
+        for(let column = 0; column < currentMatrix.columns; column++) {
+            generatedHTML += currentMatrix.matrix[line][column] ? ` <div> ${currentMatrix.matrix[line][column]} </div>` : `<div> _ </div>`;
+        }
+
+        generatedHTML += '<br>'
+    }
+
+    OUTPUT.innerHTML = generatedHTML;
 }
 
 
@@ -75,12 +85,14 @@ function generateEvents() {
     document.querySelector("#generateMatrix").addEventListener("click", () => {
         currentMatrix = new matrixStructure();
         currentMatrix.generateMatrix(document.querySelector("#generateMatrixFeedback"));
+
+        updateOutput();
     })
 
     document.querySelector("#insertNumberHTML").addEventListener("click", () => { 
-        const number = parseFloat(document.querySelector("#insertDataHTML").value);
+        const NUMBER = parseFloat(document.querySelector("#insertDataHTML").value);
+        currentMatrix.insertNumber(NUMBER);
 
-        currentMatrix.insertNumber(number);
         updateOutput();
     });
 }
