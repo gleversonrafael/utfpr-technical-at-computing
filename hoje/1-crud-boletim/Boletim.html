@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>CRUD Boletim</title>
+</head>
+
+<body>
+   <h1>Cadastro de Notas</h1>
+
+   <label for="inputId">Id</label>
+   <input type="text" name="inputId" id="inputId">
+   <input type="button" value="Procure" id="btProcure" onclick="procure()" style="display:inline;">
+   <input type="button" value="Inserir" id="btInserir" onclick="inserir()" style="display:none;">
+   <input type="button" value="Alterar" id="btAlterar" onclick="alterar()" style="display:none;">
+   <input type="button" value="Excluir" id="btExcluir" onclick="excluir()" style="display:none;">
+   <br><br>
+
+   <label for="inputMateria">Matéria</label>
+   <input type="text" name="inputMateria" id="inputMateria"> <br>
+
+   <label for="inputNota1"> Nota 1º Bimestre </label>
+   <input type="number" name="inputNota1" id="inputNota1"> <br>
+
+   <label for="inputNota2"> Nota 2º Bimestre </label>
+   <input type="number" name="inputNota2" id="inputNota2"> <br>
+
+   <label for="inputNota1"> Nota 3º Bimestre </label>
+   <input type="number" name="inputNota3" id="inputNota3"> <br>
+
+   <label for="inputNota4"> Nota 4º Bimestre </label>
+   <input type="number" name="inputNota4" id="inputNota4">
+
+   <br>
+
+   <br><br>
+   <div id="divAviso" style="background-color: antiquewhite;"></div>
+   <br>
+   <input type="button" value="Salvar" id="btSalvar" onclick="salvar()" style="display:none;">
+   <input type="button" value="Cancelar" id="btCancelar" onclick="cancelarOperacao()" style="display:none;">
+   <br><br>
+   <!-- <input type="button" value="Listar" onclick="listar()">
+    <br><br> -->
+
+   <div id="outputSaida" style="background-color: aqua;">...</div>
+
+   <input type="button" value="Persistir" id="btPersisitir" onclick="prepararESalvarCSV()">
+   <input type="button" value="Recuperar" id="btRecuperar" onclick="abrirArquivoSalvoEmLocalPermanente()">
+   <script src="./Boletim.js"></script>
+   <script src="./BoletimControle.js"></script>
+</body>
+
+</html>
