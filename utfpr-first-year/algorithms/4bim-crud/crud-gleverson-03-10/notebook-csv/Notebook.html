@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>CRUD - Notebook</title>
+
+</head>
+
+<body>
+   <h1>CRUD - Notebook</h1>
+
+   <label for="inputId">Id</label>
+   <input type="text" name="inputId" id="inputId">
+   
+   <input type="button" value="Procure" id="btProcure" onclick="procure()" style="display:inline;">
+   <input type="button" value="Inserir" id="btInserir" onclick="inserir()" style="display:none;">
+   <input type="button" value="Alterar" id="btAlterar" onclick="alterar()" style="display:none;">
+   <input type="button" value="Excluir" id="btExcluir" onclick="excluir()" style="display:none;">
+   <br><br>
+
+   <!-- string -->
+   <div>
+      <label for="inputModelo">Modelo</label>
+      <input class="bloqueavel" type="text" name="inputModelo" id="inputModelo"> <br>
+      
+      <label for="inputFabricante">Fabricante</label>
+      <input class="bloqueavel" type="text" name="inputFabricante" id="inputFabricante"> <br> <br>
+      
+      <label for="inputProcessador">Processador</label>
+      <input class="bloqueavel" type="text" name="inputProcessador" id="inputProcessador"> <br>
+   
+      <label for="inputFabricanteProcessador">Fabricante do processador</label>
+      <input class="bloqueavel" type="text" name="inputFabricanteProcessador" id="inputFabricanteProcessador"> <br> <br>
+
+   </div>
+
+   <div>
+      <label for="inputQuantidadeRam"> Quantidade de ram (GB)</label>
+      <input type="number" name="inputQuantidadeRam" id="inputQuantidadeRam" class="bloqueavel"> <br>
+
+      <label for="inputArmazenamentoPermanente">Armazenamento permanente (GB)</label>
+      <input type="number" name="inputArmazenamentoPermanente" id="inputArmazenamentoPermanente" class="bloqueavel"> <br> <br>
+
+      <label for="inputDataLancamento">Data de lançamento</label>
+      <input type="date" name="inputDataLancamento" id="inputDataLancamento" class="bloqueavel"> <br>
+
+   </div>
+   
+   <br>
+   <div id="divAviso" style="background-color: antiquewhite;"></div>
+   <br>
+
+   <input type="button" value="Salvar" id="btSalvar" onclick="salvar()" style="display:none;">
+   <input type="button" value="Cancelar" id="btCancelar" onclick="cancelarOperacao()" style="display:none;">
+   
+   <br><br>
+   <!-- <input type="button" value="Listar" onclick="listar()">
+    <br><br> -->
+
+   <div id="outputSaida" style="background-color: aqua;">...</div>
+
+   <input type="button" value="Persistir" id="btPersisitir" onclick="prepararESalvarCSV()">
+   <input type="button" value="Recuperar" id="btRecuperar" onclick="abrirArquivoSalvoEmLocalPermanente()">
+
+   <script src="./Notebook.js"></script>
+   <script src="./NotebookControle.js"></script>
+</body>
+
+</html>
