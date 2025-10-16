@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador</title>
+</head>
+
+<body>
+    <h1> Gerador CRUD</h1>
+
+    <label for="inputNomeClasse">Nome da classe</label>
+    <input type="text" id="inputNomeClasse"><br>
+    
+    <label for="inputAtributos">Atributos </label>
+    <input type="text" id="inputAtributos" style="width: 500px;"><br>
+
+    <label for="inputTiposAtributos">Tipos dos atributos</label>
+    <input type="text" id="inputTiposAtributos" style="width: 500px;"><br><br>
+
+    <input type="button" value="Model" onclick="gerarModel()"> <br>
+
+    <input type="button" value="Atributos em objetos" onclick="gerarObjetosAtributos()">
+    <input type="button" value="View" onclick="gerarView()">
+    <input type="button" value="Controller" onclick="gerarController()">
+
+    <br><br>
+    <textarea name="taCodigoFonte" id="taCodigoFonte" cols="100" rows="40"></textarea>
+    
+    <script src="gerador.js"></script>
+
+</body>
+
+</html>

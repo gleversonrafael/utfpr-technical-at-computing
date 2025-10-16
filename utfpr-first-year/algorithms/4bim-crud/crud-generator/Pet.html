@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>CRUD Boletim</title>
+   <title>CRUD Pet</title>
 </head>
 
 <body>
-   <h1>Cadastro de Notas</h1>
+   <!-- cadastro de n -->
+   <h1>Cadastro de Pet</h1>
 
    <label for="inputId">Id</label>
    <input type="text" name="inputId" id="inputId">
@@ -18,22 +19,12 @@
    <input type="button" value="Excluir" id="btExcluir" onclick="excluir()" style="display:none;">
    <br><br>
 
-   <label for="inputMateria">Matéria</label>
-   <input type="text" name="inputMateria" id="inputMateria"> <br>
-
-   <label for="inputNota1"> Nota 1º Bimestre </label>
-   <input type="number" name="inputNota1" id="inputNota1"> <br>
-
-   <label for="inputNota2"> Nota 2º Bimestre </label>
-   <input type="number" name="inputNota2" id="inputNota2"> <br>
-
-   <label for="inputNota1"> Nota 3º Bimestre </label>
-   <input type="number" name="inputNota3" id="inputNota3"> <br>
-
-   <label for="inputNota4"> Nota 4º Bimestre </label>
-   <input type="number" name="inputNota4" id="inputNota4">
-
+   <!-- attr 1--> 
+   <label for="inputNome">Nome</label>
+   <input type="text" name="inputNome" id="inputNome">
    <br>
+
+   <!-- attr n... TYPE--> 
 
    <br><br>
    <div id="divAviso" style="background-color: antiquewhite;"></div>
@@ -46,8 +37,10 @@
 
    <input type="button" value="Persistir" id="btPersisitir" onclick="prepararESalvarCSV()">
    <input type="button" value="Recuperar" id="btRecuperar" onclick="abrirArquivoSalvoEmLocalPermanente()">
-   <script src="./Boletim.js"></script>
-   <script src="./BoletimControle.js"></script>
+
+   <!-- arquivos... --> 
+   <script src="./Pet.js"></script>
+   <script src="./PetControle.js"></script>
 </body>
 
 </html>
