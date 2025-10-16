@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Cars</title>
+</head>
+
+<body>
+    <h1> Car insertion</h1>
+
+    <form>
+        <fieldset>
+            <legend> Details</legend>
+            
+            <label for="carBrand"> Car brand</label>
+            <input type="text" id="carBrand">
+
+            <br>
+
+            <label for="licensePlate"> License plate</label>
+            <input type="text" id="licensePlate">
+
+            <br>
+        
+            <label for="carModel"> Car model</label>
+            <input type="text" id="carModel">
+
+            <br>
+
+            <label for="year"> Year</label>
+            <input type="number" id="year">
+
+            <br>
+
+            <label for="text"> Selected brand to be queried</label>
+            <input type="text" id="queriedBrand" placeholder="Leave null if you wish to see all cars">
+
+            <br>
+
+        </fieldset>
+        
+        <fieldset>
+            <legend> Options</legend>
+
+            <input type="button" value="Insert car" onclick="addCar()">
+            <br>
+
+            <input type="button" value="View queried cars" onclick="showQueriedCars()">
+
+        </fieldset>
+
+    </form>
+
+    <h3>Output:</h3>
+    <p id="outputParagraph">[]</p>
+
+    <script src="class.js"></script>
+    <script src="index.js"></script>
+
+</body>
+
+</html>
