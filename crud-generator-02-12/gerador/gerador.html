@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador</title>
+</head>
+
+<body>
+    <h1> Gerador CRUD</h1>
+
+
+    <h2> Dados</h2>
+    <label for="inputNomeClasse">Nome da classe</label>
+    <input type="text" id="inputNomeClasse"><br>
+    
+    <label for="inputAtributos">Atributos </label>
+    <input type="text" id="inputAtributos" style="width: 500px;" placeholder="Separe por ; sem espaços Exemplo: pelo;raca;preco"><br>
+
+    <label for="inputTiposAtributos">Tipos dos atributos</label>
+    <input type="text" id="inputTiposAtributos" style="width: 500px;" placeholder="Separe por ; sem espaços Exemplo: int;float;bool;string"><br><br>
+
+    <h2> Preparar ambiente</h2>
+    <input type="button" value="Atributos em objetos" onclick="gerarObjetosAtributos()">
+
+    <input type="button" value="Setar nome da classe" onclick="definaNomeClasse()"> 
+
+    <input type="button" value="Mostrar gerador atual no console" onclick="mostrarGeradorAtual()">
+
+    <br>
+
+    <h2> Operações</h2>
+    <h3> Geradores</h3>
+    <input type="button" value="Model" onclick="crieEstrutura(`model`)">
+    <input type="button" value="View" onclick="crieEstrutura(`view`)">
+    <input type="button" value="Controller" onclick="crieEstrutura(`controller`)">
+
+
+    <h3> Downloads</h3>
+    <input id="botaoBaixarArquivo" type="button" value="Baixar arquivo do resultado">
+
+    <br><br>
+    
+    <h2> Resultado</h2>
+    <textarea name="taCodigoFonte" id="taCodigoFonte" cols="100" rows="40"></textarea>
+
+    <div id="divTeste"></div>
+    
+    <script src="geradorModelo.js"></script>
+    <script src="gerador.js"></script>
+
+</body>
+
+</html>
