@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+        <html lang="pt-br">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>CRUD Boletim</title>
+        </head>
+
+        <body>
+            <h1>Cadastro de Boletim</h1>
+
+            <label for="inputId">Id</label>
+            <input type="text" name="inputId" id="inputId">
+            
+            <input type="button" value="Procure" id="btProcure" onclick="procure()" style="display:inline;">
+
+            <input type="button" value="Inserir" id="btInserir" onclick="inserir()" style="display:none;">
+            
+            <input type="button" value="Alterar" id="btAlterar" onclick="alterar()" style="display:none;">
+            
+            <input type="button" value="Excluir" id="btExcluir" onclick="excluir()" style="display:none;"> <br><br>   
+        
+            <label for="inputMateria"> Materia</label>
+            <input class="atributoJS" id="inputMateria" type="text" style="width: 500px"> <br> 
+                
+            <label for="inputNota1"> Nota1</label>
+            <input class="atributoJS" id="inputNota1" type="number" style="width: 500px"> <br> 
+                
+            <label for="inputNota2"> Nota2</label>
+            <input class="atributoJS" id="inputNota2" type="number" style="width: 500px"> <br> 
+                
+            <br><br>
+            <div id="divAviso" style="background-color: antiquewhite;"></div>
+            <br>
+
+            <!-- botões salvar/cancelar --> 
+            <input type="button" value="Salvar" id="btSalvar" onclick="salvar()" style="display:none;">
+            
+            <input type="button" value="Cancelar" id="btCancelar" onclick="cancelarOperacao()" style="display:none;">
+            <br><br>
+
+            <div id="outputSaida" style="background-color: aqua;">...</div>
+
+            <!-- persistir / recuperar --> 
+            <input type="button" value="Persistir" id="btPersisitir" onclick="prepararESalvarCSV()">
+            
+            <input type="button" value="Recuperar" id="btRecuperar" onclick="abrirArquivoSalvoEmLocalPermanente()">
+
+            <!-- arquivos... --> 
+            <script src="./Boletim.js"></script>
+            <script src="./BoletimControle.js"></script>
+
+        </body>
+        </html>
+        
