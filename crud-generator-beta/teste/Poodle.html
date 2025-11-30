@@ -4,11 +4,11 @@
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>CRUD Relógio</title>
+            <title>CRUD Poodle</title>
         </head>
 
         <body>
-            <h1>Cadastro de Relógio</h1>
+            <h1>Cadastro de Poodle</h1>
 
             <label for="inputId">Id</label>
             <input type="text" name="inputId" id="inputId">
@@ -21,11 +21,14 @@
             
             <input type="button" value="Excluir" id="btExcluir" onclick="excluir()" style="display:none;"> <br><br>   
         
-            <label for="inputModelo"> Modelo</label>
-            <input class="atributoJS" id="inputModelo" type="text" style="width: 500px"> <br> 
+            <label for="inputNome"> Nome</label>
+            <input class="atributoJS" id="inputNome" type="text" style="width: 500px"> <br> 
                 
-            <label for="inputFabricante"> Fabricante</label>
-            <input class="atributoJS" id="inputFabricante" type="text" style="width: 500px"> <br> 
+            <label for="inputTamanho"> Tamanho</label>
+            <input class="atributoJS" id="inputTamanho" type="number" style="width: 500px"> <br> 
+                
+            <label for="inputPreco"> Preco</label>
+            <input class="atributoJS" id="inputPreco" type="number" style="width: 500px"> <br> 
                 
             <br><br>
             <div id="divAviso" style="background-color: antiquewhite;"></div>
@@ -45,8 +48,8 @@
             <input type="button" value="Recuperar" id="btRecuperar" onclick="abrirArquivoSalvoEmLocalPermanente()">
 
             <!-- arquivos... --> 
-            <script src="./Relógio.js"></script>
-            <script src="./RelógioControle.js"></script>
+            <script src="./Poodle.js"></script>
+            <script src="./PoodleControle.js"></script>
 
         </body>
         </html>

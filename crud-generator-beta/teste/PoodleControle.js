@@ -203,7 +203,9 @@
                 stringRetornada = stringRecebida.replace(stringRecebida[0], stringRecebida[0].toUpperCase());
 
                 return stringRetornada;
-            }function salvar() 
+            }
+            
+            function salvar() 
             {
                 //gerencia operações inserir, alterar e excluir na lista
                 // obter os dados a partir do html
@@ -215,17 +217,18 @@
                     id = entidadeAtualGlobal.id;
                 }
         
-            const modelo = document.getElementById("inputModelo").value;
-const fabricante = document.getElementById("inputFabricante").value;
-if(!isNaN(id) && Number.isInteger(id) && modelo && fabricante) {
+            const nome = document.getElementById("inputNome").value;
+                const tamanho = parseFloat(document.getElementById("inputTamanho").value);
+                const preco = parseFloat(document.getElementById("inputPreco").value);
+                if(!isNaN(id) && Number.isInteger(id) && nome && !isNaN(tamanho) && !isNaN(preco)) {
 switch (oQueEstaFazendo) {
                         case 'inserindo':
-                            entidadeAtualGlobal = new Relógio(id,modelo,fabricante, listaDados.length);
+                            entidadeAtualGlobal = new Poodle(id,nome,tamanho,preco, listaDados.length);
                             listaDados.push(entidadeAtualGlobal);
                             mostrarAviso("Inserido na lista");
                             break;
                         case 'alterando':
-                            let entidadeAtualAlterada = new Relógio(id,modelo,fabricante, listaDados[entidadeAtualGlobal.posicaoNaLista]);
+                            let entidadeAtualAlterada = new Poodle(id,nome,tamanho,preco, listaDados[entidadeAtualGlobal.posicaoNaLista]);
 
                             listaDados[entidadeAtualGlobal.posicaoNaLista] = entidadeAtualAlterada;
                             mostrarAviso("Alterado");
@@ -259,7 +262,57 @@ switch (oQueEstaFazendo) {
                 for (let i = 0; i < vetor.length; i++) {
                     const linha = vetor[i];
 
-                    texto +=linha.id + " - " + linha.modelo + " - " + linha.fabricante + "<br>"
+                    texto +=linha.id + " - " + linha.nome + " - " + linha.tamanho + " - " + linha.preco + "<br>"
                 }
                 return texto;
             }
+            ///////////////////////////////////////////////////
+            ///////////////////////////////////////////////////
+            // V
+            function prepararESalvarCSV() { //gera um arquivo csv com as informações da lista. Vai enviar da memória RAM para dispositivo de armazenamento permanente
+                let nomeDoArquivoDestino = "./Poodle.csv";  //define o nome do arquivo csv
+                let textoCSV = "";
+                for (let i = 0; i < listaDados.length; i++) {
+                    const linha = listaDados[i]; 
+                    
+                    //variavel linha contem as informações de cada pet
+                    
+                    textoCSV += linha.id + ";" +linha.nome + ";" +linha.tamanho + ";" +linha.preco + ";" +linha.posicaoNaLista + "\n";
+                }
+                    persistirEmLocalPermanente(nomeDoArquivoDestino, textoCSV);
+                }
+
+                // Função para processar o arquivo CSV e transferir os dados para a listaPet
+                ///////////////////////////////////////////////////
+                // V
+                function converterDeCSVparaListaObjeto(arquivo) {
+                    const leitor = new FileReader();  //objeto que permite ler arquivos locais no navegador 
+                    leitor.onload = function (e) {
+                        const conteudo = e.target.result; // Conteúdo do arquivo CSV
+                        const linhas = conteudo.split('\n'); // Separa o conteúdo por linha
+                        listaDados = []; // Limpa a lista atual (se necessário)
+                        
+                        for (let i = 0; i < linhas.length; i++) {
+                            const linha = linhas[i].trim();  //linhas[i] representa cada linha do arquivo CSV
+                            
+                            if (linha) { //verifica se a linha não está vazia
+                                const dados = linha.split(';'); // Separa os dados por ';'
+
+                                if(dados.length === 5) {
+                                    listaDados.push({
+
+                    id: dados[0],
+nome: dados[1],
+tamanho: dados[2],
+preco: dados[3],
+posicaoNaLista: dados[4]
+
+                                    });
+                                }
+                            }
+                        }
+                        listar(); //exibe a lista atualizada
+                    };
+                    leitor.readAsText(arquivo); // Lê o arquivo como texto
+                }
+                

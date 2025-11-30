@@ -156,7 +156,9 @@ class GeradorCRUD
             let resposta = "";
 
             // 1. id
-            resposta += `function salvar() 
+            resposta += `
+            
+            function salvar() 
             {
                 //gerencia operações inserir, alterar e excluir na lista
                 // obter os dados a partir do html
@@ -180,7 +182,8 @@ class GeradorCRUD
                 resposta += "const " + ATUAL.nome + " = ";
                 resposta += ATUAL.validadorHTML ? ATUAL.validadorHTML : `document.getElementById("input${ATUAL.idHTML}").value`;
 
-                resposta += ";\n";
+                resposta += `;
+                `;
             }
 
 
@@ -283,54 +286,93 @@ class GeradorCRUD
         {
             let resposta = "";
 
-            resposta += obterPrepararESalvarCSV(esseGerador);
-            console.log(resposta);
-            resposta += obterConversorCSV(esseGerador);
+            resposta += obterPrepararESalvarCSV();
+            resposta += obterConversorCSV();
 
             return resposta;
 
 
             function obterPrepararESalvarCSV()
             {
-                let respostaFuncao = "";
-
-                respostaFuncao += `
-                ///////////////////////////////////////////////////
-                ///////////////////////////////////////////////////
-                // V
-                function prepararESalvarCSV() { //gera um arquivo csv com as informações da lista. Vai enviar da memória RAM para dispositivo de armazenamento permanente
-                    let nomeDoArquivoDestino = "./${esseGerador.nomeClasse}.csv";  //define o nome do arquivo csv
-                    let textoCSV = "";
-                    for (let i = 0; i < listaDados.length; i++) {
-                        const linha = listaDados[i]; 
-                        
-                        //variavel linha contem as informações de cada pet
-                        
-                        textoCSV += ";
-                `
+                let respostaFuncao = `
+            ///////////////////////////////////////////////////
+            ///////////////////////////////////////////////////
+            // V
+            function prepararESalvarCSV() { //gera um arquivo csv com as informações da lista. Vai enviar da memória RAM para dispositivo de armazenamento permanente
+                let nomeDoArquivoDestino = "./${esseGerador.nomeClasse}.csv";  //define o nome do arquivo csv
+                let textoCSV = "";
+                for (let i = 0; i < listaDados.length; i++) {
+                    const linha = listaDados[i]; 
+                    
+                    //variavel linha contem as informações de cada pet
+                    
+                    textoCSV += `
                 
-                for(let i = 0; i < esseGerador.atributosObjetos; i++)
+                for(let i = 0; i < esseGerador.atributosObjetos.length + 1; i++)
                 {
-                    respostaFuncao += `linha.${atributosObjetos[i].nome} + `;
-
-                    if(i < esseGerador.atributosObjetos - 1)
-                        respostaFuncao += `";"`
+                    if(i < esseGerador.atributosObjetos.length)
+                        respostaFuncao += `linha.${esseGerador.atributosObjetos[i].nome} + ";" +`;    
                     
                     else
-                        respostaFuncao += `"\\n"`;
+                        respostaFuncao += `linha.posicaoNaLista + "\\n"`;
                 }
 
                 respostaFuncao += `;
                 }
                     persistirEmLocalPermanente(nomeDoArquivoDestino, textoCSV);
-                }`
+                }\n`
 
                 return respostaFuncao;
             }
 
+            //////////////////////////// ATUAL
             function obterConversorCSV()
             {
-                let respostaFuncao = "";
+                let respostaFuncao = `
+                // Função para processar o arquivo CSV e transferir os dados para a listaPet
+                ///////////////////////////////////////////////////
+                // V
+                function converterDeCSVparaListaObjeto(arquivo) {
+                    const leitor = new FileReader();  //objeto que permite ler arquivos locais no navegador 
+                    leitor.onload = function (e) {
+                        const conteudo = e.target.result; // Conteúdo do arquivo CSV
+                        const linhas = conteudo.split('\\n'); // Separa o conteúdo por linha
+                        listaDados = []; // Limpa a lista atual (se necessário)
+                        
+                        for (let i = 0; i < linhas.length; i++) {
+                            const linha = linhas[i].trim();  //linhas[i] representa cada linha do arquivo CSV
+                            
+                            if (linha) { //verifica se a linha não está vazia
+                                const dados = linha.split(';'); // Separa os dados por ';'
+
+                                if(dados.length === ${esseGerador.atributosObjetos.length + 1}) {
+                                    listaDados.push({
+
+                    `;
+
+                // cada atributo...
+                for(let i = 0; i < esseGerador.atributosObjetos.length + 1; i++)
+                {
+                    if(i < esseGerador.atributosObjetos.length)
+                        respostaFuncao += 
+                        `${esseGerador.atributosObjetos[i].nome}: dados[${i}],\n`
+                     
+                    else 
+                        respostaFuncao +=
+                        `posicaoNaLista: dados[${i}]\n`
+                }
+
+                respostaFuncao += `
+                                    });
+                                }
+                            }
+                        }
+                        listar(); //exibe a lista atualizada
+                    };
+                    leitor.readAsText(arquivo); // Lê o arquivo como texto
+                }
+                `
+
 
                 return respostaFuncao;
             }
