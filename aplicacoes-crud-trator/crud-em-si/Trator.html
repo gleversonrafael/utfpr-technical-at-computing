@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+        <html lang="pt-br">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>CRUD Trator</title>
+        </head>
+
+        <body>
+            <h1>Cadastro de Trator</h1>
+
+            <label for="inputId">Id</label>
+            <input type="text" name="inputId" id="inputId">
+            
+            <input type="button" value="Procure" id="btProcure" onclick="procure()" style="display:inline;">
+
+            <input type="button" value="Inserir" id="btInserir" onclick="inserir()" style="display:none;">
+            
+            <input type="button" value="Alterar" id="btAlterar" onclick="alterar()" style="display:none;">
+            
+            <input type="button" value="Excluir" id="btExcluir" onclick="excluir()" style="display:none;"> <br><br>   
+        
+            <label for="inputModelo"> Modelo</label>
+            <input class="atributoJS" id="inputModelo" type="text" style="width: 500px"> <br> 
+                
+            <label for="inputMarca"> Marca</label>
+            <input class="atributoJS" id="inputMarca" type="text" style="width: 500px"> <br> 
+                
+            <label for="inputAno_fabricacao"> Ano fabricação</label>
+            <input class="atributoJS" id="inputAno_fabricacao" type="number" style="width: 500px"> <br> 
+                
+            <label for="inputPotencia_cv"> Potência CV</label>
+            <input class="atributoJS" id="inputPotencia_cv" type="number" style="width: 500px"> <br> 
+                
+            <label for="inputTipo_tracao"> Tipo da tração</label>
+            <select id="inputTipo_tracao" class="atributoJS">
+                <option value="4x2">4x2</option>
+                <option value="4x4">4x4</option>
+                <option value="4x2">4x2 TDA</option>
+
+            </select>
+
+            <br>
+                
+            <label for="inputHoras_trabalhadas"> Horas trabalhadas</label>
+            <input class="atributoJS" id="inputHoras_trabalhadas" type="number" style="width: 500px"> <br>
+
+            <label for="inputHoras_entre_manutencoes"> Horas_entre_manutencoes</label>
+            <input class="atributoJS" id="inputHoras_entre_manutencoes" type="number" style="width: 500px"> <br> 
+
+            <label for="inputData_ultima_manutencao">Data da última manutenção</label>
+            <input type="date" id="inputData_ultima_manutencao" class="atributoJS"> <br>
+
+            <label for="inputEUsado">Usado</label>
+            <input type="checkbox" id="inputEUsado" class="atributoJS" value="on-currently">
+
+
+
+            <br><br>
+
+            <!-- FUNÇÕES EXTRA -->
+            <!-- I. PESQUISAR POR -->
+            <label for="inputPesquisarPorCategoria"> Pesquisar por</label>
+            <select id="inputPesquisarPorCategoria">
+                <option value="marca"> Marca </option>
+                <option value="modelo"> Modelo </option>
+
+            </select>
+
+            <input type="text" id="inputTextoPorCategoria">
+            <input type="button" value="Pesquisar por categoria selecionada" onclick="pesquisarPorCategoria()"> <br> <br>
+
+            <!-- II. LISTAR POR -->
+            <input type="button" value="Listar tratores com mais de 500 horas trabalhadas" onclick="listarComMaisDe500()"><br>
+            <input type="button" value="Listar tratores com manutenção vencida (data menor que hoje)"><br>
+
+            <input type="button" value="Listar todos" onclick="listar()"> <br>
+            
+            <!-- IV. TRATORES E DATAS-->
+            <input type="button" value="Tratores e suas prováveis datas de manutenção">
+
+            <div id="divAviso" style="background-color: antiquewhite;"></div>
+            <br>
+
+
+            <!-- botões salvar/cancelar --> 
+            <input type="button" value="Salvar" id="btSalvar" onclick="salvar()" style="display:none;">
+            
+            <input type="button" value="Cancelar" id="btCancelar" onclick="cancelarOperacao()" style="display:none;">
+            <br><br>
+
+            <div id="outputSaida" style="background-color: aqua;">...</div>
+
+
+            <!-- persistir / recuperar --> 
+            <input type="button" value="Persistir" id="btPersisitir" onclick="prepararESalvarCSV()">
+            
+            <input type="button" value="Recuperar" id="btRecuperar" onclick="abrirArquivoSalvoEmLocalPermanente()">
+
+            <!-- arquivos... --> 
+            <script src="./Trator.js"></script>
+            <script src="./TratorControle.js"></script>
+
+        </body>
+        </html>
+        
