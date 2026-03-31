@@ -1,0 +1,71 @@
+-- TABELAS - 0. PREPARAÇÃO
+DROP TABLE PROJETO_DE_PESQUISA;
+DROP TABLE LINHA_DE_PESQUISA;
+DROP TABLE PROFESSOR;
+DROP TABLE ARTIGO_CIENTIFICO;
+DROP TABLE ESTANTE;
+DROP TABLE RELACAO_PROJETO_PROFESSOR;
+
+-- TABELAS - I. PROJETO DE PESQUISA
+CREATE TABLE IF NOT EXISTS LINHA_DE_PESQUISA(
+	nome VARCHAR(100),
+	descricao VARCHAR(500),
+	
+	PRIMARY KEY(nome)
+);
+
+CREATE TABLE IF NOT EXISTS PROJETO_DE_PESQUISA(
+	titulo_unico VARCHAR(200),
+	data_aprovacao DATE,
+	orcamento DECIMAL(10,2),
+	
+	linha_de_pesquisa_nome VARCHAR(100),
+	
+	PRIMARY KEY(titulo_unico),
+	FOREIGN KEY(linha_de_pesquisa_nome) REFERENCES LINHA_DE_PESQUISA(nome)
+);
+
+CREATE TABLE IF NOT EXISTS PROFESSOR(
+	numero_matricula INTEGER,
+	nome VARCHAR(200),
+	regime_trabalho INTEGER,
+	
+	PRIMARY KEY(numero_matricula)
+);
+
+CREATE TABLE IF NOT EXISTS ESTANTE(
+	codigo INTEGER,
+	numero_corredor INTEGER,
+	
+	PRIMARY KEY(codigo)
+);
+
+
+CREATE TABLE IF NOT EXISTS ARTIGO_CIENTIFICO(
+	titulo VARCHAR(100),
+	nome_revista VARCHAR(100),
+	ano_publicacao INTEGER,
+	
+	estante_codigo INTEGER,
+	projeto_de_pesquisa_titulo_unico VARCHAR(200), 
+
+	PRIMARY KEY(titulo),
+	FOREIGN KEY(estante_codigo) REFERENCES ESTANTE(codigo),
+	FOREIGN KEY(projeto_de_pesquisa_titulo_unico) REFERENCES PROJETO_DE_PESQUISA(titulo_unico)
+);
+
+
+CREATE TABLE IF NOT EXISTS RELACAO_PROJETO_PROFESSOR(
+	professor_numero_matricula INTEGER,
+	projeto_de_pesquisa_titulo_unico VARCHAR(200),
+	coordenador BOOL,
+	carga_horaria INTEGER,
+
+	PRIMARY KEY(professor_numero_matricula, projeto_de_pesquisa_titulo_unico),
+	FOREIGN KEY(professor_numero_matricula) REFERENCES PROFESSOR(numero_patricula),
+	FOREIGN KEY(projeto_de_pesquisa_titulo_unico) REFERENCES PROJETO_DE_PESQUISA(titulo_unico)
+);
+
+
+-- 
+
