@@ -1,0 +1,89 @@
+-- DROP TABLES
+DROP TABLE IF EXISTS EXPEDICAO_PESQUISADOR, PESQUISADOR, ETIQUETA, ESPECIME, EXPEDICAO, ARMARIO, ESPECIE;
+
+
+-- CREATE TABLES
+CREATE TABLE IF NOT EXISTS ESPECIE(
+	nome_cientifico VARCHAR(200),
+	PRIMARY KEY(nome_cientifico),
+
+	nome_popular VARCHAR(100),
+	familia VARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS ARMARIO(
+	numero INTEGER,
+	PRIMARY KEY(numero),
+	
+	capacidade INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS EXPEDICAO(
+	nome VARCHAR(200),
+	PRIMARY KEY(nome),
+
+	bioma VARCHAR(150), 
+	data_expedicao date
+);
+
+CREATE TABLE IF NOT EXISTS ESPECIME(
+	numero_tombo_unico INTEGER,
+	PRIMARY KEY(numero_tombo_unico),
+	
+	data_coleta DATE,
+	estagio_maturacao VARCHAR(50),
+
+	especie_nome_cientifico VARCHAR(200),
+	FOREIGN KEY(especie_nome_cientifico) 
+	REFERENCES ESPECIE(nome_cientifico),
+
+	armario_numero INTEGER,
+	FOREIGN KEY(armario_numero) REFERENCES ARMARIO(numero),
+
+	expedicao_nome VARCHAR(200),
+	FOREIGN KEY(expedicao_nome)
+	REFERENCES EXPEDICAO(nome)
+);
+
+CREATE TABLE IF NOT EXISTS ETIQUETA(
+	codigo_hexadecimal char(7),
+	PRIMARY KEY(codigo_hexadecimal),
+
+	fabricante VARCHAR(100),
+
+	especime_numero INTEGER,
+	FOREIGN KEY(especime_numero) 
+	REFERENCES ESPECIME(numero_tombo_unico),
+	UNIQUE(especime_numero)
+);
+
+
+CREATE TABLE IF NOT EXISTS PESQUISADOR(
+	cpf char(11),
+	PRIMARY KEY(cpf),
+	
+	nome VARCHAR(100),
+	instituicao VARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS EXPEDICAO_PESQUISADOR(
+	pesquisador_cpf CHAR(11),
+	expedicao_nome VARCHAR(200),
+	PRIMARY KEY(pesquisador_cpf, expedicao_nome),
+
+	funcao_pesquisador VARCHAR(100),
+
+	FOREIGN KEY(pesquisador_cpf) REFERENCES PESQUISADOR(cpf),
+	FOREIGN KEY(expedicao_nome) REFERENCES EXPEDICAO(nome)
+);
+
+SELECT * FROM ESPECIME;
+
+INSERT INTO ARMARIO(numero, capacidade) VALUES (1234, 50);
+INSERT INTO EXPEDICAO(nome, bioma, data_expedicao) VALUES ('Boa Vista', 'Nether', NULL) 
+
+INSERT INTO ESPECIME(
+numero_tombo_unico, data_coleta, estagio_maturacao, 
+especie_nome_cientifico, armario_numero, expedicao_nome) 
+VALUES 
+(1234, NULL, 'Com flores', 'Dominio Reino Familia', 1234, 'Boa Vista');
