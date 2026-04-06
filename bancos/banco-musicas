@@ -1,0 +1,64 @@
+DROP TABLE IF EXISTS TESTE, MUSICA, ARTISTA;
+
+-- CRIAÇÕES
+CREATE TABLE IF NOT EXISTS ARTISTA(
+	id CHAR(4),
+	PRIMARY KEY(id),
+
+	nome VARCHAR(100) NOT NULL,
+	pais VARCHAR(100) NOT NULL DEFAULT 'Inacional'
+);
+
+CREATE TABLE IF NOT EXISTS MUSICA(
+	id CHAR(4),
+	PRIMARY KEY(id),
+	
+	titulo VARCHAR(100) NOT NULL,
+	duracao_segundos INTEGER,
+
+	artista_id CHAR(4),
+	FOREIGN KEY(artista_id) REFERENCES ARTISTA(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS USUARIO(
+	login INTEGER,
+	PRIMARY KEY(login),
+
+	tipo VARCHAR(100),
+	nome VARCHAR(200)
+);
+
+CREATE TABLE IF NOT EXISTS PLAYLIST(
+	contador INTEGER,
+);
+
+
+-- INSERÇÕES
+INSERT INTO ARTISTA(id, nome, pais)
+VALUES 
+('A001', 'Linkin Park', 'Estados Unidos'), 
+('A002', 'The Drums', 'Estados Unidos'), 
+('A003', 'Eminem', 'Estados Unidos');
+
+INSERT INTO ARTISTA(id, nome)
+VALUES
+('A004', 'ABC');
+
+/*
+INSERT INTO MUSICA(id, titulo, duracao_segundos, artista_id)
+VALUES 
+('M001', 'Faint', 240, 'A001'),
+('M002', 'Somewhere I Belong', 300, 'A001'),
+('M003', 'Numb', 230, 'A001'),
+('M004', 'Days', 230, 'A002'),
+('M005', 'Money', 300, 'A002'),
+('M006', 'I dont know how to love', 200, 'A002'),
+('M007', 'What you were', 300, 'A002'),
+('M008', 'Lose Yourself', 200, 'A003'),
+('M009', 'Not Afraid', 400, 'A003'),
+('M010', 'TIll I Collapse', 500, 'A003');
+
+*/
+
+

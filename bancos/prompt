@@ -1,0 +1,13 @@
+I'm learning relational databases with pgadmin4 and I've already learned
+How to:
+    Create tables and databases
+    Insert values into tables
+    Delete tables
+What are tables (using the object-oriented approach)
+Relations N-N, N-1, 1-1 (its applications, such as: many musics can be related to one type of artist only)
+
+Considering the context:
+Explain how the relations works and each type of it.
+Consider that I know the basics of JS.
+Ask more questions if necessary 
+
