@@ -1,0 +1,76 @@
+-- DROPPING TABLES
+DROP TABLE IF EXISTS HISTORICO, ASSISTE, FILME, USUARIO, PLANO;
+
+-- INSERTING TABLES
+CREATE TABLE IF NOT EXISTS PLANO(
+	codigo_de_plano_unico INTEGER,
+	PRIMARY KEY(codigo_de_plano_unico),
+
+	nome VARCHAR(100),
+	valor DECIMAL(10,2),
+	qualidade_maxima VARCHAR(20)
+);
+
+CREATE TABLE IF NOT EXISTS USUARIO(
+	id VARCHAR(20),
+	PRIMARY KEY(id),
+
+	nome VARCHAR(100),
+	email VARCHAR(200),
+	UNIQUE(email),
+
+	plano_codigo INTEGER,
+	FOREIGN KEY (plano_codigo) REFERENCES PLANO (codigo_de_plano_unico)
+);
+
+
+
+CREATE TABLE IF NOT EXISTS FILME(
+	codigo_de_catalogo VARCHAR(20),
+	PRIMARY KEY(codigo_de_catalogo),
+
+	titulo VARCHAR(100),
+	genero VARCHAR(50),
+	duracao INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS ASSISTE(
+	usuario_id VARCHAR(20),
+	filme_codigo_de_catalogo VARCHAR(20),
+	PRIMARY KEY(usuario_id, filme_codigo_de_catalogo),
+	
+	FOREIGN KEY(usuario_id) REFERENCES USUARIO(id),
+	FOREIGN KEY(filme_codigo_de_catalogo) REFERENCES FILME(codigo_de_catalogo)
+);
+
+-- COMPOUND FOREIGN KEY
+CREATE TABLE IF NOT EXISTS HISTORICO(
+	id SERIAL,
+	PRIMARY KEY(id),
+	
+	data_visualizacao TIMESTAMP,
+	
+	filme_codigo_de_catalogo VARCHAR(20),
+	usuario_id VARCHAR(20),
+	FOREIGN KEY(filme_codigo_de_catalogo, usuario_id) REFERENCES ASSISTE(filme_codigo_de_catalogo, usuario_id)
+);
+
+
+
+
+-- INSERÇÕES
+INSERT INTO PLANO(codigo_de_plano_unico, nome, valor, qualidade_maxima)
+VALUES
+(1, 'Básico', 20, '480p'),
+
+
+INSERT INTO USUARIO(id,nome,email, plano_codigo)
+VALUES 
+('U1', 'Carlitos', 'Carlitos@Hotmail.com', 1),
+('U2', 'Benedito', 'Benedito@Gmail.com', 2);
+
+INSERT INTO FILME(codigo_de_catalogo, titulo, genero, duracao)
+VALUES
+('F1', 'Up: Altas aventuras', 'Aventura', 250),
+('F2', 'Nemo', 'Aventura', 250);
+
