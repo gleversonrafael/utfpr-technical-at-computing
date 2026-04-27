@@ -1,0 +1,105 @@
+/* REMOÇÕES */
+DROP TABLE IF EXISTS EQUIPAMENTO, GERENTE, UNIDADE, 
+ALUNO_TREINO, TREINO, INSTRUTOR, ALUNO, PLANO; 
+
+
+/* CRIAÇÕES 
+----------------------------------------------------
+*/
+-- A
+CREATE TABLE IF NOT EXISTS PLANO(
+	id SERIAL PRIMARY KEY,
+	
+	nome VARCHAR(100),
+	valor DECIMAL(10, 2)
+);
+
+
+CREATE TABLE IF NOT EXISTS ALUNO(
+	cpf INTEGER PRIMARY KEY,
+	
+	nome VARCHAR(200),
+	data_de_nascimento DATE,
+	telefone CHAR(13), -- FORMATO 1122334444444
+	
+	plano_id INTEGER,
+	FOREIGN KEY(plano_id) REFERENCES PLANO(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS INSTRUTOR(
+	cpf INTEGER PRIMARY KEY,
+	
+	nome VARCHAR(200),
+	especialidade VARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS TREINO(
+	id SERIAL PRIMARY KEY,
+	
+	nome VARCHAR(200),
+
+	cpf_instrutor INTEGER,
+	FOREIGN KEY(cpf_instrutor) REFERENCES INSTRUTOR(cpf)
+);
+
+
+CREATE TABLE IF NOT EXISTS ALUNO_TREINO(
+	aluno_cpf INTEGER,
+	treino_id INTEGER,
+	FOREIGN KEY(aluno_cpf) REFERENCES ALUNO(cpf),
+	FOREIGN KEY(treino_id) REFERENCES TREINO(id),
+
+	PRIMARY KEY(aluno_cpf, treino_id),
+	
+	frequencia_semanal NUMERIC(10,6),
+	CONSTRAINT frequencia_e_porcentagem -- É porcentagem? 0.5 = 50%
+	CHECK(frequencia_semanal >= 0 AND frequencia_semanal <= 1)
+);
+
+
+-- B
+CREATE TABLE IF NOT EXISTS UNIDADE(
+	id SERIAL PRIMARY KEY,
+	endereco VARCHAR(200)
+);
+
+CREATE TABLE IF NOT EXISTS GERENTE(
+	cpf INTEGER PRIMARY KEY,
+	
+	nome VARCHAR(200),
+	data_de_nascimento DATE,
+
+	unidade_id INTEGER,
+	UNIQUE(unidade_id),
+	FOREIGN KEY(unidade_id) REFERENCES UNIDADE(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS EQUIPAMENTO(
+	id SERIAL PRIMARY KEY,
+	
+	nome VARCHAR(200),
+	marca VARCHAR(200),
+
+	unidade_id INTEGER,
+	FOREIGN KEY(unidade_id) REFERENCES UNIDADE(id)
+);
+
+
+/* INSERÇÕES 
+----------------------------------------------------
+*/
+INSERT INTO PLANO(nome, valor)
+VALUES
+('Mensal', 50),
+('Semestral', 200),
+('VIP', 500);
+
+
+INSERT INTO ALUNO(cpf, nome, data_de_nascimento, telefone, plano_id)
+VALUES
+(00100200345, 'Rafael', '2009-04-09', '1122334444444', 1);
+
+SELECT * FROM ALUNO;
+
