@@ -1,0 +1,79 @@
+------------------------ EXERCICIOS
+
+-- EX1;
+SELECT CURRENT_DATE + INTERVAL '1 day' + TIME '09:00:00';
+
+-- EX2;
+SELECT '2026-05-10'::DATE + INTERVAL '45 days';
+
+-- EX3;
+-- SELECT AGE(CURRENT_DATE, '2022-03-15');
+-- SELECT '2026-05-04'::DATE - '2022-03-15'::DATE;
+--SELECT AGE('2026-05-04', '2022-03-15');
+--SELECT AGE('2022-03-15');
+
+-- EX4;
+-- SELECT * FROM USUARIOS 
+-- WHERE AGE(ultimo_acesso) > INTERVAL '6 months';
+
+-- SELECT * FROM USUARIOS
+-- WHERE CURRENT_DATE - INTERVAL '6 months' > ultimo_acesso;
+
+-- EX5;
+-- !!!!!!
+-- SELECT  8*(INTERVAL '1 week 3 days');
+
+-- EX6;
+-- SELECT CURRENT_DATE - '2001-01-01';
+
+-- EX7;
+-- SELECT CURRENT_DATE + INTERVAL '5 years 2 months';
+
+-- EX8;
+-- !!!!!!
+-- SELECT (INTERVAL '90 days')/4 AS intervalo_teste;
+
+-- EX9
+-- SELECT cts, ctsz FROM EVENTOS;
+-- SELECT NOW() + INTERVAL '12 hours';
+
+-- EX10
+SELECT id, cts FROM EVENTOS 
+WHERE cts BETWEEN NOW() AND NOW() + INTERVAL '15 days 6 hours';
+
+
+---------------------- TABELAS
+-- REMOÇÕES
+DROP TABLE IF EXISTS USUARIOS, EVENTOS;
+
+-- CRIAÇÕES
+CREATE TABLE IF NOT EXISTS USUARIOS(
+	id SERIAL PRIMARY KEY,
+	
+	nome TEXT NOT NULL,
+	ultimo_acesso TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS EVENTOS(
+	id SERIAL PRIMARY KEY,
+
+	cts TIMESTAMP,
+	ctsz TIMESTAMPTZ
+);
+
+
+-- INSERÇÕES
+INSERT INTO USUARIOS(nome, ultimo_acesso)
+VALUES
+('Adriano', '2020-10-05 00:00:00'),
+('Beto', '2026-10-06 00:00:00');
+
+SET TIME ZONE 'Asia/Tokyo';
+
+INSERT INTO EVENTOS(cts, ctsz)
+VALUES
+('2026-05-05 11:30:00', '2026-05-05 11:30:00'),
+('2026-07-20 11:30:00', '2026-05-05 11:30:00'),
+('2026-05-10 11:30:00', '2026-05-05 11:30:00');
+
+
