@@ -1,0 +1,41 @@
+-- |||||||| SELEÇÕES
+-- E1
+SELECT * FROM ALUNO WHERE idade < 20 AND nivel LIKE 'JR';
+
+-- E2
+SELECT * FROM PROFESSOR WHERE iddepto = 68;
+
+-- E3 (!!)
+SELECT * 
+FROM ALUNO 
+WHERE nroAlun IN (
+	SELECT nroAlun 
+	FROM MATRICULADO 
+	WHERE nomeCurso = 'Database Systems'
+);
+
+-- E4 (V1)
+SELECT nomeProf
+FROM PROFESSOR
+WHERE idProf IN (
+	SELECT idProf
+	FROM CURSO
+	WHERE sala = '20 AVW'
+);
+
+-- E4 (V2)
+SELECT nomeProf FROM PROFESSOR, CURSO 
+WHERE PROFESSOR.IDPROF = CURSO.IDPROF
+AND SALA = '20 AVW';
+
+-- E5 (+)
+SELECT nivel FROM ALUNO, MATRICULADO, CURSO
+WHERE ALUNO.nroAlun = MATRICULADO.nroAlun AND
+	CURSO.nome = MATRICULADO.nomecurso AND -- !!!!
+	sala = '20 AVW'
+;
+
+-- IGNORAR...
+
+
+-- SELECT * FROM PROFESSOR, CURSO;
