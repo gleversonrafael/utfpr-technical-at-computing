@@ -49,9 +49,56 @@ FROM MATRICULADO;
 
 -- E9
 SELECT nomeProf FROM PROFESSOR
-WHERE idDepto = 68 OR 12
+WHERE idDepto = 68 OR idDepto = 12;
 
 -- E10
-SELECT DISTINCT * FROM ALUNO, MATRICULADO
+/* SELECT DISTINCT * FROM ALUNO, MATRICULADO
 	WHERE ALUNO.nroAlun = MATRICULADO.nroAlun
 	AND (formacao = 'Computer Science' OR nomeCurso = 'Database Systems');
+*/
+
+-- E15
+SELECT DISTINCT nomeProf 
+FROM PROFESSOR P, CURSO C
+WHERE C.idProf = P.idProf AND sala = '20 AVW';
+
+
+-- E16
+
+
+-- E17
+-- Encontre a idade do aluno mais velho matriculado em um 
+-- curso ministrado por Ivana Teach.
+SELECT distinct idade
+FROM ALUNO A, MATRICULADO M, CURSO C, PROFESSOR P
+WHERE A.nroAlun = M.nroAlun 
+AND C.nome = M.nomeCurso
+AND P.idProf = C.idProf
+AND nomeProf = 'Ivana Teach';
+
+
+-- E18
+-- Liste os nomes dos cursos sem repetições que possuam alunos matriculados e 
+-- sejam ministrados na sala '20 AVW' (skipado -> só unir as tabelas faz com que apenas cursos com alunos matriculados apareçam)
+
+-- E19
+-- Encontre os números dos alunos sem repetição que estão matriculados 
+-- em pelo menos dois cursos que são ministrados na mesma sala.
+SELECT DISTINCT A.nroAlun 
+FROM ALUNO A, MATRICULADO M1, CURSO C1, MATRICULADO M2, CURSO C2
+WHERE M1.nomeCurso = C1.nome 
+AND M2.nomeCurso = C2.nome
+AND A.nroAlun = M1.nroAlun AND A.nroAlun = M2.nroAlun
+AND C1.sala = C2.sala
+AND C1.nome != C2.nome;
+
+-- E20
+-- Encontre o nome do professor que ministra pelo menos dois cursos. (mesmo esquema)
+SELECT DISTINCT nomeProf
+FROM PROFESSOR P, CURSO C1, CURSO C2
+WHERE P.idProf = C1.idProf 
+AND P.idProf = C2.idProf
+AND C1.nome != C2.nome;
+
+-- E21
+-- Encontre o nome do professor que ministra pelo menos três cursos. (mesmo esquema)
