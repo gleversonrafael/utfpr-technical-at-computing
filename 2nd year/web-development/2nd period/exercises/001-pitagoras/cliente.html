@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Enviar mensagens</title>
+</head>
+
+<body>
+    <h1>Envie uma mensagem para o servidor</h1>
+    
+    <div>
+        <label for="inputCatetoA"> Cateto A</label>
+        <input id="inputCatetoA" type="number">
+
+    </div>
+
+    <div>
+        <label for="inputCatetoB"> Cateto B</label>
+        <input id="inputCatetoB" type="number">
+
+    </div>
+
+    <button onclick="enviarMensagem()">Enviar</button>
+    <br>
+    <br>
+    <h3> Resposta do servidor</h3>
+    <span id="respostaDoServidor">.....</span>    
+
+    <script>
+        async function enviarMensagem() {            
+            const enderecoServidor = 'localhost';
+            const porta = 3000;
+
+            const catetoA = parseFloat(document.getElementById("inputCatetoA").value);
+            const catetoB = parseFloat(document.getElementById("inputCatetoB").value);
+
+            try {
+                const response = await fetch(`http://${enderecoServidor}:${porta}/enviar-mensagem`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(
+                        {catetoA, catetoB}
+                    )
+                });
+
+                const data = await response.text();
+                debugger
+                document.getElementById("respostaDoServidor").innerHTML = data;
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro na comunicação com o servidor');
+            }
+        }
+    </script>
+</body>
+
+</html>

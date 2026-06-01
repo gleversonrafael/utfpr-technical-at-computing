@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Enviar Imagem e Mensagens</title>
+</head>
+
+<body>
+    <!-- Conexão -->
+    <div style="display:none">
+        <h1>Configurações de Conexão</h1>
+        <label for="enderecoServidorInput">Endereço do Servidor:</label>
+        <input type="text" id="enderecoServidorInput" placeholder="Digite o endereço do servidor" value="localhost"><br><br>
+        
+        <label for="inputPorta">Porta:</label>
+        <input type="text" id="inputPorta" placeholder="Digite a porta" value="3000"><br><br>
+        <hr>
+
+    </div>
+    
+    <!-- Upload -->
+    <div style="display:none">
+        <h2>Envie uma Imagem para o servidor</h2>
+        <label for="inputImagem">Selecione a Imagem:</label>
+        <input type="file" id="inputImagem" accept="image/*"><br><br>
+        <button onclick="enviarImagem()">Enviar Imagem</button>
+
+        <br><br>
+        <h3> Resposta do servidor (Upload)</h3>
+        <span id="respostaImagem">.....</span>   
+
+        <hr>
+
+    </div>
+
+    <!-- Hipotenusa -->
+    <div style="display:none">
+        <h2>Calcular Hipotenusa</h2>
+        <label for="inputCateto1">Cateto 1:</label>
+        <input type="text" id="inputCateto1" placeholder="Digite o valor do cateto 1"><br><br>
+        <label for="inputCateto2">Cateto 2:</label>
+        <input type="text" id="inputCateto2" placeholder="Digite o valor do cateto 2"><br><br>
+        <button onclick="enviarMensagem()">Calcular</button>
+        
+        <br><br>
+        <h3> Resposta do servidor (Pitágoras)</h3>
+        <span id="respostaDoServidor">.....</span>   
+
+    </div>
+     
+    <!-- HTML -->
+    <h1> Registrador de Aluno </h1>
+
+    <form id="formRegistrarAluno">
+        <fieldset>
+            <legend> Aluno</legend>
+
+            <label for="inputRA">RA</label>
+            <input type="text" id="inputRA"> <br>
+
+            <label for="inputNome"> Nome </label>
+            <input type="text" id="inputNome"> <br>
+
+            <label for="inputImagemAluno">Imagem</label>
+            <input type="file" id="inputImagemAluno" accept="image/*">
+
+        </fieldset>
+
+        <fieldset>
+            <legend> Notas </legend>
+
+            <label for="inputNota1">Nota 1</label>
+            <input id="inputNota1" type="number"> <br>
+            
+            <label for="inputNota2">Nota 2</label>
+            <input id="inputNota2" type="number"> <br>
+
+            <label for="inputNota3">Nota 3</label>
+            <input id="inputNota3" type="number"> <br>
+
+            <label for="inputNota4">Nota 4</label>
+            <input id="inputNota4" type="number">
+
+        </fieldset>
+
+        <input type="submit" value="Enviar">
+
+    </form>
+
+    <script src="frontend.js"></script>
+    
+</body>
+
+</html>
