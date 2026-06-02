@@ -42,6 +42,7 @@ app.use((req, res, next) => {
     next();
 });
 
+
 // --- ROTA ANTERIOR (Mantida para exemplo) ---
 app.post('/enviar-mensagem', (req, res) => {
     let x = req.body.x;
@@ -74,6 +75,14 @@ app.post('/enviar-imagem', upload.single('foto'), (req, res) => {
         res.status(500).send('Erro interno ao salvar a imagem.');
     }
 });
+
+
+// --- ROTA: Dados do aluno
+app.post('/rotaDadosAluno', (requisicao, resposta) => {
+    console.log(requisicao.body);
+
+    resposta.json(requisicao.body);
+})
 
 
 const obterIP = () => {

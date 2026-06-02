@@ -85,36 +85,61 @@ document.getElementById("formRegistrarAluno").addEventListener("submit", (event)
 async function obterEstadoAluno()
 {
     // E
-    const DADOS = 
-    {
-        ra: document.getElementById("inputRA").value,
-        nome: document.getElementById("inputNome").value,
-        imgAluno: document.getElementById("inputImagemAluno").files[0],
+    const dadosFormulario = obterDados();
 
-        nota1: parseFloat(document.getElementById("inputNota1").value),
-        nota2: parseFloat(document.getElementById("inputNota2").value),
-        nota3: parseFloat(document.getElementById("inputNota3").value),
-        nota4: parseFloat(document.getElementById("inputNota4").value)
+    // p
+    try
+    {
+        const resposta = await fetch
+        (
+            "http://localhost:3000/rotaDadosAluno", 
+            {
+                method: "POST",
+                body: dadosFormulario
+            }
+        )
+
+        const dadosRetornados = await resposta.text();
+        console.log(dadosRetornados);
+    } 
+    catch (error) 
+    {
+        alert(error);
+        return;
     }
 
-    /*if(!DADOS.imgAluno)
+    function obterDados()
     {
-        alert("Nenhuma imagem foi selecionada");
-        return;
-    }*/
+        // E
+        const DADOS = 
+        {
+            ra: document.getElementById("inputRA").value,
+            nome: document.getElementById("inputNome").value,
+            imgAluno: document.getElementById("inputImagemAluno").files[0],
 
-    console.log(DADOS);
+            nota1: parseFloat(document.getElementById("inputNota1").value),
+            nota2: parseFloat(document.getElementById("inputNota2").value),
+            nota3: parseFloat(document.getElementById("inputNota3").value),
+            nota4: parseFloat(document.getElementById("inputNota4").value)
+        }
 
-    const DADOS_ENVIADOS = new FormData();
+        /*if(!DADOS.imgAluno)
+        {
+            alert("Nenhuma imagem foi selecionada");
+            return;
+        }*/
 
-    DADOS_ENVIADOS.append("ra", DADOS.ra);
-    DADOS_ENVIADOS.append("nome", DADOS.nome);
-    DADOS_ENVIADOS.append("imgAluno", DADOS.imgAluno);
+        const DADOS_ENVIADOS = new FormData();
 
-    DADOS_ENVIADOS.append("nota1", DADOS.nota1);
-    DADOS_ENVIADOS.append("nota2", DADOS.nota2);
-    DADOS_ENVIADOS.append("nota3", DADOS.nota3);
-    DADOS_ENVIADOS.append("nota4", DADOS.nota4);
+        DADOS_ENVIADOS.append("ra", "carlitos");
+        DADOS_ENVIADOS.append("nome", DADOS.nome);
+        DADOS_ENVIADOS.append("imgAluno", DADOS.imgAluno);
 
-    console.log(DADOS_ENVIADOS);
+        DADOS_ENVIADOS.append("nota1", DADOS.nota1);
+        DADOS_ENVIADOS.append("nota2", DADOS.nota2);
+        DADOS_ENVIADOS.append("nota3", DADOS.nota3);
+        DADOS_ENVIADOS.append("nota4", DADOS.nota4);
+
+        return DADOS_ENVIADOS
+    }
 }
