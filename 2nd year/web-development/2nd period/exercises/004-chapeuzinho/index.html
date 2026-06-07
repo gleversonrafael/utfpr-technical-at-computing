@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Consulta (Chapeuzinho)</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <h1>Consulta ao Banco de Dados</h1>
+    
+    <div class="container">
+        <h3> Listar estoque</h3>
+        <button onclick="listarEstoque()"> Listar estoque</button>
+        
+        <div id="resultadoTodas" class="resultado">...</div>
+
+    </div>
+
+    <!-- Listar pessoas-->
+    <div class="container" style="display:none">
+        <h3>Todas as Pessoas</h3>
+        <button onclick="listarTodas()">Listar Todas</button>
+        <div id="resultadoTodas" class="resultado">...</div>
+    </div>
+
+    <!-- CPF-->
+    <div class="container" style="display:none">
+        <h3>Buscar por CPF (Chave Primária)</h3>
+        <label for="inputCpf">CPF:</label>
+        <input type="text" id="inputCpf" placeholder="Digite o CPF (ex: 12345678900)">
+        <button onclick="buscarPorCPF()">Buscar</button>
+        <div id="resultadoCPF" class="resultado">...</div>
+    </div>
+
+    <!-- Nome-->
+    <div class="container" style="display:none">
+        <h3>Buscar por Nome</h3>
+        <label for="inputNome">Nome:</label>
+        <input type="text" id="inputNome" placeholder="Digite o nome (ou parte dele)">
+        <button onclick="buscarPorNome()">Buscar</button>
+        <div id="resultadoNome" class="resultado">...</div>
+    </div>
+
+    <script src="scriptsUsados.js"></script>
+</body>
+
+</html>
