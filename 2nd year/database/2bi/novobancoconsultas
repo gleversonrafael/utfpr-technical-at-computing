@@ -102,3 +102,29 @@ AND C1.nome != C2.nome;
 
 -- E21
 -- Encontre o nome do professor que ministra pelo menos três cursos. (mesmo esquema)
+SELECT DISTINCT nomeProf
+FROM PROFESSOR P, CURSO C1, CURSO C2, CURSO C3
+WHERE P.idProf = C1.idProf
+AND P.idProf = C2.idProf
+AND P.idProf = C3.idProf
+AND C1.nome != C2.nome
+AND C1.nome != C3.nome
+AND C2.nome != C3.nome;
+
+-- E22
+-- Verifique se há algum professor com o mesmo nome de um aluno.
+SELECT nomeProf 
+FROM PROFESSOR P, ALUNO A
+WHERE P.nomeProf = A.nomeAlun;
+
+
+-- E23
+-- Liste os alunos e, caso eles estejam matriculado, liste o seu curso. 
+-- (!!!!!!!!!!!!!!)
+
+-- E24
+-- Liste todos os cursos e, caso eles tenham algum aluno matriculado, 
+-- imprima o número do aluno.
+SELECT C.*, M.nroAlun
+FROM 
+CURSO C LEFT OUTER JOIN MATRICULADO M ON (C.nome = M.nomeCurso);
