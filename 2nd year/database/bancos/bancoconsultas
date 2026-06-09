@@ -1,0 +1,147 @@
+-- |||||||| SELEÇÕES
+-- E1
+SELECT * FROM ALUNO WHERE idade < 20 AND nivel LIKE 'JR';
+
+-- E2
+SELECT * FROM PROFESSOR WHERE iddepto = 68;
+
+-- E3 (!!)
+SELECT * 
+FROM ALUNO 
+WHERE nroAlun IN (
+	SELECT nroAlun 
+	FROM MATRICULADO 
+	WHERE nomeCurso = 'Database Systems'
+);
+
+-- E4 (V1)
+SELECT nomeProf
+FROM PROFESSOR
+WHERE idProf IN (
+	SELECT idProf
+	FROM CURSO
+	WHERE sala = '20 AVW'
+);
+
+-- E4 (V2)
+SELECT nomeProf FROM PROFESSOR, CURSO 
+WHERE PROFESSOR.IDPROF = CURSO.IDPROF
+AND SALA = '20 AVW';
+
+-- E5 (+ Testar no verdadeiro PC)
+SELECT nivel FROM ALUNO, MATRICULADO, CURSO
+WHERE ALUNO.nroAlun = MATRICULADO.nroAlun AND
+	CURSO.nome = MATRICULADO.nomecurso AND 
+	sala = '20 AVW'
+;
+
+-- E6
+SELECT * FROM ALUNO
+WHERE formacao LIKE '%cie%';
+
+-- E7
+SELECT COUNT(*) FROM ALUNO;
+
+
+-- E8
+SELECT COUNT(*)
+FROM MATRICULADO;
+
+-- E9
+SELECT nomeProf FROM PROFESSOR
+WHERE idDepto = 68 OR idDepto = 12;
+
+-- E10
+/* SELECT DISTINCT * FROM ALUNO, MATRICULADO
+	WHERE ALUNO.nroAlun = MATRICULADO.nroAlun
+	AND (formacao = 'Computer Science' OR nomeCurso = 'Database Systems');
+*/
+
+-- E15
+SELECT DISTINCT nomeProf 
+FROM PROFESSOR P, CURSO C
+WHERE C.idProf = P.idProf AND sala = '20 AVW';
+
+
+-- E16
+
+
+-- E17
+-- Encontre a idade do aluno mais velho matriculado em um 
+-- curso ministrado por Ivana Teach.
+SELECT distinct idade
+FROM ALUNO A, MATRICULADO M, CURSO C, PROFESSOR P
+WHERE A.nroAlun = M.nroAlun 
+AND C.nome = M.nomeCurso
+AND P.idProf = C.idProf
+AND nomeProf = 'Ivana Teach';
+
+
+-- E18
+-- Liste os nomes dos cursos sem repetições que possuam alunos matriculados e 
+-- sejam ministrados na sala '20 AVW' (skipado -> só unir as tabelas faz com que apenas cursos com alunos matriculados apareçam)
+
+-- E19
+-- Encontre os números dos alunos sem repetição que estão matriculados 
+-- em pelo menos dois cursos que são ministrados na mesma sala.
+SELECT DISTINCT A.nroAlun 
+FROM ALUNO A, MATRICULADO M1, CURSO C1, MATRICULADO M2, CURSO C2
+WHERE M1.nomeCurso = C1.nome 
+AND M2.nomeCurso = C2.nome
+AND A.nroAlun = M1.nroAlun AND A.nroAlun = M2.nroAlun
+AND C1.sala = C2.sala
+AND C1.nome != C2.nome;
+
+-- E20
+-- Encontre o nome do professor que ministra pelo menos dois cursos. (mesmo esquema)
+SELECT DISTINCT nomeProf
+FROM PROFESSOR P, CURSO C1, CURSO C2
+WHERE P.idProf = C1.idProf 
+AND P.idProf = C2.idProf
+AND C1.nome != C2.nome;
+
+-- E21
+-- Encontre o nome do professor que ministra pelo menos três cursos. (mesmo esquema)
+SELECT DISTINCT nomeProf
+FROM PROFESSOR P, CURSO C1, CURSO C2, CURSO C3
+WHERE P.idProf = C1.idProf
+AND P.idProf = C2.idProf
+AND P.idProf = C3.idProf
+AND C1.nome != C2.nome
+AND C1.nome != C3.nome
+AND C2.nome != C3.nome;
+
+-- E25
+-- Liste os alunos e, caso eles estejam matriculado, liste o seu curso. 
+-- Liste todos os cursos e, caso eles tenham algum aluno matriculado, 
+-- imprima o número do aluno.
+
+-- E26
+-- Liste todos os cursos e, caso ele tenha algum aluno matriculado do nível 'JR', 
+-- imprima o nome do aluno.
+SELECT *
+FROM CURSO C INNER JOIN MATRICULADO M ON (C.nome = M.nomeCurso)
+LEFT OUTER JOIN ALUNO A ON (A.nroAlun = M.nroAlun);
+
+-- POR QUE??
+SELECT C.nome, A.nomeAlun, A.nivel
+FROM MATRICULADO M INNER JOIN ALUNO A
+ON(M.nroAlun = A.nroAlun AND nivel = 'JR')
+RIGHT OUTER JOIN CURSO C ON (M.nomeCurso = C.nome);
+
+-- E27
+-- Liste todos os professores e, caso um professor lecione um curso, liste o nome do curso
+SELECT P.nomeProf, C.nome
+FROM PROFESSOR P LEFT OUTER JOIN CURSO C 
+ON (P.idProf = C.idProf);
+
+
+-- E28
+-- Imprima a quantidade de alunos para cada curso 
+-- Incluir nulo...
+SELECT nomeCurso, COUNT(*) 
+FROM ALUNO A RIGHT OUTER JOIN MATRICULADO M 
+ON(A.nroAlun = M.nroAlun)
+GROUP BY M.nomeCurso;
+
+-- Professor...
