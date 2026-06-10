@@ -111,20 +111,37 @@ AND C1.nome != C2.nome
 AND C1.nome != C3.nome
 AND C2.nome != C3.nome;
 
--- E22
--- Verifique se há algum professor com o mesmo nome de um aluno.
-SELECT nomeProf 
-FROM PROFESSOR P, ALUNO A
-WHERE P.nomeProf = A.nomeAlun;
-
-
--- E23
+-- E25
 -- Liste os alunos e, caso eles estejam matriculado, liste o seu curso. 
--- (!!!!!!!!!!!!!!)
-
--- E24
 -- Liste todos os cursos e, caso eles tenham algum aluno matriculado, 
 -- imprima o número do aluno.
-SELECT C.*, M.nroAlun
-FROM 
-CURSO C LEFT OUTER JOIN MATRICULADO M ON (C.nome = M.nomeCurso);
+
+-- E26
+-- Liste todos os cursos e, caso ele tenha algum aluno matriculado do nível 'JR', 
+-- imprima o nome do aluno.
+SELECT *
+FROM CURSO C INNER JOIN MATRICULADO M ON (C.nome = M.nomeCurso)
+LEFT OUTER JOIN ALUNO A ON (A.nroAlun = M.nroAlun);
+
+-- POR QUE??
+SELECT C.nome, A.nomeAlun, A.nivel
+FROM MATRICULADO M INNER JOIN ALUNO A
+ON(M.nroAlun = A.nroAlun AND nivel = 'JR')
+RIGHT OUTER JOIN CURSO C ON (M.nomeCurso = C.nome);
+
+-- E27
+-- Liste todos os professores e, caso um professor lecione um curso, liste o nome do curso
+SELECT P.nomeProf, C.nome
+FROM PROFESSOR P LEFT OUTER JOIN CURSO C 
+ON (P.idProf = C.idProf);
+
+
+-- E28
+-- Imprima a quantidade de alunos para cada curso 
+-- Incluir nulo...
+SELECT nomeCurso, COUNT(*) 
+FROM ALUNO A RIGHT OUTER JOIN MATRICULADO M 
+ON(A.nroAlun = M.nroAlun)
+GROUP BY M.nomeCurso;
+
+-- Professor...
