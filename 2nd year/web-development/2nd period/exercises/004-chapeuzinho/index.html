@@ -6,12 +6,27 @@
     <link rel="stylesheet" href="index.css">
 </head>
 
-<body>
-    <h1>Consulta ao Banco de Dados</h1>
-    
+<body>    
     <div class="container">
-        <h3> Listar estoque</h3>
-        <button onclick="listarEstoque()"> Listar estoque</button>
+        <h2> Quitutes de Clientina </h2>
+
+        <h3> Atribuições de Internetina</h3>
+
+        <span>Mensagem</span>
+        <select id="tipoDeEnvio">
+            <option value="verificarReposicao">Há algo que precisa ser reposto?</option>
+            <option value="enviarReposicao">Irei mandar...</option>
+
+        </select>
+
+        <button onclick="enviarInternetina()">Enviar internetina</button>
+
+
+    </div>
+
+    <div class="container">
+        <h2> Dispensa Básica, de Servidorina</h2>
+        <button onclick="listarEstoque()"> Como está o meu estoque?</button>
         
         <div id="resultadoTodas" class="resultado">...</div>
 

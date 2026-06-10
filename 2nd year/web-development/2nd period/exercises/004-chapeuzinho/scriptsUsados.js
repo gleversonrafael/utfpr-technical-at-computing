@@ -144,6 +144,38 @@ async function buscarPorNome() {
 
 
 // Chapéuzinho
+async function enviarInternetina()
+{
+    // E
+    const TIPO = document.querySelector("select#tipoDeEnvio").value;
+    let rotaInternetina = "";
+
+    try
+    {
+        switch(TIPO) 
+        {
+            case "verificarReposicao":
+                rotaInternetina = 'verificarReposicao';
+                break;
+
+            case "enviarReposicao":
+                rotaInternetina = "enviarReposicao";
+                break;
+
+            default:
+        }
+
+        const response = await fetch(`http://${enderecoServidor}:${porta}/${rotaInternetina}`);
+        
+        console.log(await response.json());
+
+    } 
+    catch(error)
+    {
+        alert(error);
+    }
+}
+
 async function listarEstoque() {
     try {
         const requisicaoListar = await fetch(

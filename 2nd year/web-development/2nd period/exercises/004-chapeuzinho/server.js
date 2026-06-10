@@ -47,6 +47,65 @@ app.get('/listarEstoque', async (req, res) => {
     }
 })
 
+// Rota para enviar Internetina
+app.get('/verificarReposicao', 
+    async (req, res) => 
+    {
+        try 
+        {
+            // E
+            const REQUISICAO_SERVIDORINA = await pool.query("SELECT * FROM public.dispensaBasica");
+
+            let mensagemEnviada, reposicao = [];
+
+            // P
+            REQUISICAO_SERVIDORINA.rows.forEach((row) => 
+            {
+                if(row.quantidade_produto < row.quantidade_minima_produto)
+                {
+                    let objetoReposto = 
+                    {
+                        id_produto: row.id_produto,
+                        nome_produto: row.nome_produto,
+                        
+                        quantidade_produto: row.quantidade_produto,
+
+                        quantidade_minima_produto: row.quantidade_minima_produto,
+                        quantidade_maxima_produto: row.quantidade_maxima_produto,
+                        
+                        quantidade_reposta: row.quantidade_maxima_produto - row.quantidade_produto
+                    } 
+
+                    reposicao.push(objetoReposto);
+                }
+            })
+
+            if(reposicao.length > 0) {
+                mensagemEnviada = "Os itens a seguir devem ser repostos!";
+            
+            } else {
+                mensagemEnviada = "Tudo OK!";
+            }
+
+            // S
+            res.json
+            ({
+                status: 'sucesso',
+                mensagem: mensagemEnviada,
+                adicional: reposicao
+            })
+        }
+        catch(error)
+        {
+            res.json
+            ({
+                status: 'erro',
+                mensagem: 'LOBO INTERCEPTOU!',
+                adicional: error
+            })
+        }               
+    }
+)
 
 
 ////////////////////////////////////////////////////
@@ -70,8 +129,6 @@ app.get('/pessoas', async (req, res) => {
         });
     }
 });
-
-
 // Rota para buscar pessoa por CPF (PK)
 app.get('/pessoa/cpf/:cpf', async (req, res) => {
     try {
@@ -102,7 +159,6 @@ app.get('/pessoa/cpf/:cpf', async (req, res) => {
         });
     }
 });
-
 // Rota para buscar pessoa por nome (contém)
 app.get('/pessoa/nome/:nome', async (req, res) => {
     try {
