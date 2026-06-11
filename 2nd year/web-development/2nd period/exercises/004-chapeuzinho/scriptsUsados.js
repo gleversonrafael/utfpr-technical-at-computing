@@ -48,8 +48,6 @@ async function listarTodas() {
         document.getElementById('resultadoTodas').innerHTML = '<span class="erro">Erro na comunicação com o servidor</span>';
     }
 }
-
-
 async function buscarPorCPF() {
     const cpf = document.getElementById('inputCpf').value.trim();
 
@@ -89,8 +87,7 @@ async function buscarPorCPF() {
     console.error('Erro:', error);
     document.getElementById('resultadoCPF').innerHTML = '<span class="erro">Erro na comunicação com o servidor</span>';
     }
-    }
-
+}
 async function buscarPorNome() {
     const nome = document.getElementById('inputNome').value.trim();
 
@@ -165,9 +162,17 @@ async function enviarInternetina()
             default:
         }
 
-        const response = await fetch(`http://${enderecoServidor}:${porta}/${rotaInternetina}`);
+        const response = await (await fetch(`http://${enderecoServidor}:${porta}/${rotaInternetina}`)).json();
+
+        let tabela = criarTabelaDispensa(response.adicional);
         
-        console.log(await response.json());
+        document.getElementById('respostasServidorina').innerHTML = `
+        <div class="sucesso">
+            ${tabela}
+
+            <p> Resposta Servidorina: ${response.mensagem}</p>
+        </div>
+            `;
 
     } 
     catch(error)
@@ -190,40 +195,10 @@ async function listarEstoque() {
 
         const dadosJSON = await requisicaoListar.json();
 
+        // MOSTRAR()
         if (dadosJSON.status && dadosJSON.linhas.length > 0) {
-            let tabela = '<table>';
-
-            tabela += `
-                <tr>
-                    <th>ID</th>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Quantidade Mínima</th>
-                    <th>Quantidade Máxima</th>
-                </tr>
-            `;
-
-            dadosJSON.linhas.forEach(produto => {
-                tabela += `
-                    <tr>
-                        <td>${produto.id_produto}</td>
-                        <td>${produto.nome_produto}</td>
-                        <td>${produto.quantidade_produto}</td>
-                        <td>${produto.quantidade_minima_produto}</td>
-                        <td>${produto.quantidade_maxima_produto}</td>
-                    </tr>
-                `;
-
-            });
-
-            tabela += '</table>';
-
-            tabela += `
-                <p>
-                    <strong>Total de registros: ${dadosJSON.quantidade_linhas}</strong>
-                </p>
-            `;
-
+            let tabela = criarTabelaDispensa(dadosJSON.linhas)
+            
             document.getElementById('resultadoTodas').innerHTML = `
                 <div class="sucesso">
                     ${tabela}
@@ -242,3 +217,69 @@ async function listarEstoque() {
     }
 
 };
+
+function criarTabelaDispensa(dadosJSON)
+{
+    let tabela = '<table>';
+        tabela += `
+            <tr>
+                <th>ID</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Quantidade Mínima</th>
+                <th>Quantidade Máxima</th>
+            </tr>
+        `;
+
+        dadosJSON.forEach(produto => {
+            console.log(produto);
+            
+            tabela += `
+                <tr>
+                    <td>${produto.id_produto}</td>
+                    <td>${produto.nome_produto}</td>
+                    <td>${produto.quantidade_produto}</td>
+                    <td>${produto.quantidade_minima_produto}</td>
+                    <td>${produto.quantidade_maxima_produto}</td>
+                </tr>
+            `;
+
+        });
+
+        tabela += '</table>';
+
+    return tabela;
+}
+
+function criarTabelaReposicoes(dadosJSON){
+    let tabela = '<table>';
+        tabela += `
+            <tr>
+                <th>ID</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+
+                <th>Quantidade Máxima</th>
+                <th>Quantidade Mínima</th>
+            </tr>
+        `;
+
+        dadosJSON.forEach(produto => {
+            console.log(produto);
+            
+            tabela += `
+                <tr>
+                    <td>${produto.id_produto}</td>
+                    <td>${produto.nome_produto}</td>
+                    <td>${produto.quantidade_produto}</td>
+                    <td>${produto.quantidade_minima_produto}</td>
+                    <td>${produto.quantidade_maxima_produto}</td>
+                </tr>
+            `;
+
+        });
+
+        tabela += '</table>';
+
+    return tabela;
+}

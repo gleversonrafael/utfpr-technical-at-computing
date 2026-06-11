@@ -8,19 +8,32 @@
 
 <body>    
     <div class="container">
-        <h2> Quitutes de Clientina </h2>
+        <div>
+            <h2> Quitutes de Clientina </h2>
 
-        <h3> Atribuições de Internetina</h3>
+        </div>
 
-        <span>Mensagem</span>
-        <select id="tipoDeEnvio">
-            <option value="verificarReposicao">Há algo que precisa ser reposto?</option>
-            <option value="enviarReposicao">Irei mandar...</option>
+        <div>
+            <h3> Atribuições de Internetina</h3>
+            <span>Mensagem</span>
+            <select id="tipoDeEnvio">
+                <option value="verificarReposicao">Há algo que precisa ser reposto?</option>
+                <option value="enviarReposicao">Irei mandar...</option>
 
-        </select>
+            </select>
 
-        <button onclick="enviarInternetina()">Enviar internetina</button>
+            <button onclick="enviarInternetina()">Enviar internetina</button>
 
+        </div>
+
+        <hr>
+
+        <div>
+            <h3> Respostas de Servidorina</h3>
+            <p id="respostasServidorina"></p>
+            <div class="resultadoTodas"></div>
+
+        </div>
 
     </div>
 
@@ -37,6 +50,7 @@
         <h3>Todas as Pessoas</h3>
         <button onclick="listarTodas()">Listar Todas</button>
         <div id="resultadoTodas" class="resultado">...</div>
+
     </div>
 
     <!-- CPF-->

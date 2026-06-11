@@ -73,7 +73,7 @@ app.get('/verificarReposicao',
                         quantidade_minima_produto: row.quantidade_minima_produto,
                         quantidade_maxima_produto: row.quantidade_maxima_produto,
                         
-                        quantidade_reposta: row.quantidade_maxima_produto - row.quantidade_produto
+                        quantidade_a_ser_reposta: row.quantidade_maxima_produto - row.quantidade_produto
                     } 
 
                     reposicao.push(objetoReposto);
@@ -81,7 +81,7 @@ app.get('/verificarReposicao',
             })
 
             if(reposicao.length > 0) {
-                mensagemEnviada = "Os itens a seguir devem ser repostos!";
+                mensagemEnviada = "Os itens acima devem ser repostos!";
             
             } else {
                 mensagemEnviada = "Tudo OK!";
