@@ -1,0 +1,91 @@
+--1 - Escreva uma consulta que retorne o nome científico e o 
+--local de coleta de todos os espécimes que foram coletados 
+--em locais que contenham a palavra "Mata" em sua descrição.
+SELECT nome_cientifico, local_coleta 
+FROM especime
+WHERE local_coleta ILIKE '%Mata%';
+
+--2 - Apresente uma lista contendo o nome científico do espécime 
+-- e o nome da família botânica à qual ele pertence.
+SELECT e.nome_cientifico, f.nome_familia
+FROM especime e INNER JOIN familia f
+ON (e.id_familia = f.id_familia);
+
+--3 - Crie uma consulta que mostre o nome de cada família 
+-- botânica e a quantidade total de espécimes registrados 
+-- para cada uma delas no herbário.
+SELECT nome_familia, COUNT (*)
+FROM familia f INNER JOIN especime e
+ON (f.id_familia = e.id_familia)
+GROUP BY nome_familia;
+
+--4 - A coordenação precisa de um relatório de 
+-- produtividade dos pesquisadores. Escreva uma consulta que 
+-- liste o nome de todos os pesquisadores cadastrados e os nomes
+-- científicos dos espécimes que eles coletaram. Caso um 
+-- pesquisador ainda não tenha registrado nenhuma coleta, 
+-- seu nome ainda deve aparecer no resultado (com o valor nulo 
+-- para o espécime).
+SELECT nome_pesquisador, nome_cientifico
+FROM pesquisador p LEFT OUTER JOIN especime e 
+ON (p.id_pesquisador = e.id_pesquisador)
+ORDER BY nome_pesquisador;
+
+
+--5 - Escreva uma consulta que retorne o nome dos pesquisadores da 
+-- instituição 'UTFPR' e a quantidade de espécimes que cada um coletou. 
+-- O resultado deve agrupar os dados pelo nome do pesquisador.
+SELECT nome_pesquisador, COUNT(*)
+FROM pesquisador p LEFT JOIN especime e
+ON (p.id_pesquisador = e.id_pesquisador)
+GROUP BY nome_pesquisador;
+
+--6 - A diretoria do herbário quer focar seus estudos nas 
+-- famílias mais representativas do acervo. 
+-- Crie uma consulta que retorne o nome das famílias botânicas 
+-- que possuem mais de um espécime cadastrado na base de dados.
+SELECT nome_familia
+FROM familia f, especime e
+WHERE f.id_familia = e.id_familia;
+-- Outra forma??
+
+
+--7 - Elabore uma consulta que apresente um relatório 
+-- consolidado de coleta contendo: o nome científico do espécime, 
+-- o nome da família botânica à qual ele pertence e o nome do 
+-- pesquisador responsável por aquela coleta.
+SELECT nome_cientifico, nome_familia, nome_pesquisador
+FROM especime e INNER JOIN familia f
+ON (e.id_familia = f.id_familia)
+INNER JOIN pesquisador p
+ON (p.id_pesquisador = e.id_pesquisador);
+
+
+--8 - Precisamos identificar os membros da equipe que ainda precisam 
+-- ir a campo. Utilizando uma junção externa, escreva uma 
+-- consulta que retorne o nome dos pesquisadores que não possuem 
+-- nenhum espécime vinculado ao seu registro.
+SELECT nome_pesquisador, nome_cientifico
+FROM pesquisador p LEFT OUTER JOIN especime e
+ON (p.id_pesquisador = e.id_pesquisador)
+WHERE nome_cientifico IS NULL;
+
+--9 - A equipe de botânica precisa revisar as coletas feitas perto 
+-- de cursos d'água ou em áreas de mata fechada. Gere uma 
+-- lista com o nome científico e a data de coleta dos espécimes 
+-- cujo local de coleta comece com a palavra 'Mata' ou contenha a 
+-- palavra 'Rio'.
+SELECT nome_cientifico, data_coleta, local_coleta
+FROM especime 
+WHERE local_coleta LIKE 'Mata%' 
+OR local_coleta LIKE '%Rio%'
+
+
+--10 - Para fins de auditoria histórica, crie uma consulta
+-- que exiba a data da coleta mais antiga (primeira coleta) e a 
+-- data da coleta mais recente (última coleta) registradas em 
+-- todo o acervo do herbário.
+SELECT MIN(data_coleta), MAX(data_coleta)
+FROM especime
+
+-- CONTINUAR
