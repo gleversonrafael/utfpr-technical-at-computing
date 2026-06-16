@@ -19,6 +19,13 @@ FROM familia f INNER JOIN especime e
 ON (f.id_familia = e.id_familia)
 GROUP BY nome_familia;
 
+-- MUDANÇAS: AGRUPAR POR ID & Diferença entre count(*) e count(especime_id)
+SELECT f.id_familia, COUNT (e.id_especime)
+FROM familia f INNER JOIN especime e
+ON (f.id_familia = e.id_familia)
+GROUP BY f.id_familia;
+
+
 --4 - A coordenação precisa de um relatório de 
 -- produtividade dos pesquisadores. Escreva uma consulta que 
 -- liste o nome de todos os pesquisadores cadastrados e os nomes
@@ -40,14 +47,29 @@ FROM pesquisador p LEFT JOIN especime e
 ON (p.id_pesquisador = e.id_pesquisador)
 GROUP BY nome_pesquisador;
 
+-- E: COUNT * -> NOME CIENTIFICO 
+
 --6 - A diretoria do herbário quer focar seus estudos nas 
 -- famílias mais representativas do acervo. 
 -- Crie uma consulta que retorne o nome das famílias botânicas 
 -- que possuem mais de um espécime cadastrado na base de dados.
+-- Código errado abaixo
 SELECT nome_familia
 FROM familia f, especime e
 WHERE f.id_familia = e.id_familia;
--- Outra forma??
+
+-- E: JUNÇÃO ENTRE DOIS
+SELECT nome_familia
+FROM familia f, especime e1, especime e2
+WHERE f.id_familia = e1.id_familia
+AND f.id_familia = e2.id_familia
+AND e1.id_especime != e2.id_especime;
+
+SELECT nome_familia, COUNT(id_especime)
+FROM familia f, especime e
+WHERE f.id_familia = e.id_familia
+GROUP BY nome_familia
+HAVING COUNT(id_especime) >= 2;
 
 
 --7 - Elabore uma consulta que apresente um relatório 
@@ -89,5 +111,4 @@ SELECT
 MIN(data_coleta) AS data_mais_antiga, 
 MAX(data_coleta) AS data_mais_recente
 FROM especime
-
 
