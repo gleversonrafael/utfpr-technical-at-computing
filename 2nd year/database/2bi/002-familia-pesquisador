@@ -78,14 +78,16 @@ WHERE nome_cientifico IS NULL;
 SELECT nome_cientifico, data_coleta, local_coleta
 FROM especime 
 WHERE local_coleta LIKE 'Mata%' 
-OR local_coleta LIKE '%Rio%'
+OR local_coleta LIKE '%Rio%';
 
 
 --10 - Para fins de auditoria histórica, crie uma consulta
 -- que exiba a data da coleta mais antiga (primeira coleta) e a 
 -- data da coleta mais recente (última coleta) registradas em 
 -- todo o acervo do herbário.
-SELECT MIN(data_coleta), MAX(data_coleta)
+SELECT 
+MIN(data_coleta) AS data_mais_antiga, 
+MAX(data_coleta) AS data_mais_recente
 FROM especime
 
--- CONTINUAR
+
