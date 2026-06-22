@@ -1,0 +1,51 @@
+
+DESAFIOS
+
+|| FAMILIA-PESQUISADOR 
+||
+
+--8 - Precisamos identificar os membros da equipe que ainda precisam 
+-- ir a campo. Utilizando uma junção externa, escreva uma 
+-- consulta que retorne o nome dos pesquisadores que não possuem 
+-- nenhum espécime vinculado ao seu registro.
+
+[1]
+--3 - Crie uma consulta que mostre o nome de cada família 
+-- botânica e a quantidade total de espécimes registrados 
+-- para cada uma delas no herbário.
+
+[2] 
+--6 - A diretoria do herbário quer focar seus estudos nas 
+-- famílias mais representativas do acervo. 
+-- Crie uma consulta que retorne o nome das famílias botânicas 
+-- que possuem mais de um espécime cadastrado na base de dados.
+
+
+|| CONSULTAS
+||
+
+[3] 
+-- E26
+-- Liste todos os cursos e, caso ele tenha algum aluno matriculado do nível 'JR', 
+-- imprima o nome do aluno.
+
+SELECT nome, A.nomeAlun
+FROM
+CURSO C 
+LEFT JOIN MATRICULADO M
+ON (nome = nomeCurso) 
+LEFT JOIN ALUNO A
+ON (A.nroAlun = M.nroAlun AND nivel = 'JR')
+
+
+[4] 
+-- Imprima o nível e a idade média dos alunos desse nível, para todos os níveis exceto JR. 
+
+[5]
+-- Encontre os alunos que não estão matriculados 
+
+
+[6] 
+-- -- Liste os alunos e, caso eles estejam matriculado, liste o seu curso. 
+
+
