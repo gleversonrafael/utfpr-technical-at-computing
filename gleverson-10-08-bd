@@ -1,0 +1,89 @@
+-- 1 - Escreva uma consulta para encontrar todos os títulos que foram lançados no ano de '2014' ou '2021'.
+
+SELECT * FROM TITULOS
+WHERE ano_lancamento = '2014' 
+OR ano_lancamento = '2021';
+
+
+-- 2 - Liste os nomes e as idades dos usuários que possuem a palavra 'Premium' em seu plano.
+SELECT nome, idade
+FROM USUARIOS
+WHERE plano LIKE 'Premium';
+
+-- 3 - Selecione todos os dados dos títulos que não pertencem à categoria 3 (Ficção Científica).
+SELECT * FROM TITULOS
+WHERE id_categoria <> 3;
+
+
+-- 4 - Liste o nome dos usuários e os nomes dos títulos que eles assistiram, mas traga apenas as visualizações que duraram mais de 100 minutos (minutos_assistidos).
+SELECT U.nome, T.nome
+FROM USUARIOS U 
+INNER JOIN VISUALIZACOES V ON (U.id_usuario = V.id_usuario)
+INNER JOIN TITULOS T ON (V.id_titulo = T.id_titulo)
+WHERE minutos_assistidos > 100;
+
+-- 5 - Descubra e exiba o nome da categoria a qual pertence o título 'The Office'.
+SELECT nome_categoria
+FROM CATEGORIAS C, TITULOS T
+WHERE C.id_categoria = T.id_categoria
+AND nome = 'The Office';
+
+-- 6 - Encontre o nome das categorias (identificadas pelo id_categoria) que possuem títulos assistidos pelo usuário 'Alice Silva'.
+SELECT DISTINCT id_categoria, nome_categoria
+FROM CATEGORIAS C
+INNER JOIN TITULOS T ON (C.id_categoria = T.id_categoria)
+INNER JOIN VISUALIZACOES V ON (T.id_titulo = V.id_titulo)
+INNER JOIN USUARIOS U ON (V.id_usuario = U.id_usuario)
+WHERE U.nome = 'Alice Silva';
+
+-- 7 - Qual é a média de minutos assistidos de todas as visualizações registradas na plataforma?
+SELECT AVG(minutos_assistidos)
+FROM VISUALIZACOES;
+
+-- 8 - Qual é a idade do usuário mais velho cadastrado na plataforma?
+SELECT MAX(idade)
+FROM USUARIOS;
+
+
+-- 9 - Conte exatamente quantos títulos estão cadastrados na categoria 1 (Ação).
+SELECT COUNT(id_titulo)
+FROM TITULOS 
+WHERE id_categoria = 1;
+
+
+-- 10 - Exiba o nome de todos os usuários cadastrados no sistema e, caso possuam histórico, mostre ao lado o nome do título assistido. Usuários que ainda não assistiram a nada devem aparecer na lista com o título em branco (nulo).
+
+SELECT U.nome, T.nome
+FROM USUARIOS U 
+LEFT OUTER JOIN VISUALIZACOES V ON (U.id_usuario = V.id_usuario)
+LEFT OUTER JOIN TITULOS T ON (V.id_titulo = T.id_titulo); 
+
+
+-- 11 - Liste o nome de todos os títulos e os usuários que os assistiram. Se houver algum título que ainda não teve nenhuma visualização, ele também deve constar no resultado final.
+
+SELECT T.nome, U.nome
+FROM TITULOS T 
+LEFT JOIN VISUALIZACOES V ON (T.id_titulo = V.id_titulo)
+LEFT OUTER JOIN USUARIOS U ON (V.id_usuario = U.id_usuario);
+
+
+-- 12 - Mostre a quantidade de títulos alocados em cada categoria, exibindo o id_categoria e o total de títulos.
+SELECT C.id_categoria, COUNT(id_titulo)
+FROM TITULOS T 
+INNER JOIN CATEGORIAS C ON (T.id_categoria = C.id_categoria) 
+GROUP BY C.id_categoria;
+
+
+-- 13 - Retorne o nome de cada tipo de plano (ex: 'Premium', 'Básico') e a quantidade total de usuários registrados em cada um deles.
+SELECT plano, COUNT(id_usuario)
+FROM USUARIOS
+GROUP BY plano;
+
+
+-- 14 - Para cada título que possui visualizações, calcule e exiba o nome do título e a média de minutos assistidos por ele.
+
+SELECT T.nome
+FROM TITULOS T 
+INNER JOIN VISUALIZACOES V 
+ON (T.id_titulo = V.id_titulo)
+GROUP BY 
