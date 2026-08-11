@@ -1,14 +1,17 @@
 -- 1 - Escreva uma consulta para encontrar todos os títulos que foram lançados no ano de '2014' ou '2021'.
-
 SELECT * FROM TITULOS
 WHERE ano_lancamento = '2014' 
 OR ano_lancamento = '2021';
+
+-- M2
+SELECT * FROM TITULOS
+WHERE ano_lancamento IN ('2014','2021');
 
 
 -- 2 - Liste os nomes e as idades dos usuários que possuem a palavra 'Premium' em seu plano.
 SELECT nome, idade
 FROM USUARIOS
-WHERE plano LIKE 'Premium';
+WHERE plano LIKE '%Premium%';
 
 -- 3 - Selecione todos os dados dos títulos que não pertencem à categoria 3 (Ficção Científica).
 SELECT * FROM TITULOS
@@ -29,7 +32,7 @@ WHERE C.id_categoria = T.id_categoria
 AND nome = 'The Office';
 
 -- 6 - Encontre o nome das categorias (identificadas pelo id_categoria) que possuem títulos assistidos pelo usuário 'Alice Silva'.
-SELECT DISTINCT id_categoria, nome_categoria
+SELECT DISTINCT C.id_categoria, nome_categoria
 FROM CATEGORIAS C
 INNER JOIN TITULOS T ON (C.id_categoria = T.id_categoria)
 INNER JOIN VISUALIZACOES V ON (T.id_titulo = V.id_titulo)
@@ -80,10 +83,22 @@ FROM USUARIOS
 GROUP BY plano;
 
 
--- 14 - Para cada título que possui visualizações, calcule e exiba o nome do título e a média de minutos assistidos por ele.
-
-SELECT T.nome
+-- 14 - Para cada título que possui visualizações, 
+-- calcule e exiba o nome do título e a média de minutos
+-- assistidos por ele.
+SELECT T.nome, AVG(minutos_assistidos)
 FROM TITULOS T 
 INNER JOIN VISUALIZACOES V 
 ON (T.id_titulo = V.id_titulo)
-GROUP BY 
+GROUP BY T.nome;
+
+
+-- 15 - Liste os nomes dos títulos e a quantidade total de vezes que 
+-- cada um foi assistido, mas traga apenas os títulos que tiveram 2 
+-- ou mais visualizações.
+SELECT T.nome, COUNT(*)
+FROM TITULOS T
+INNER JOIN VISUALIZACOES V
+ON (T.id_titulo = V.id_titulo)
+GROUP BY T.nome
+HAVING COUNT(*) >= 2;
