@@ -1,0 +1,100 @@
+-- [!!!] 1 - nomes dos clientes que compraram algum produto do departamento de 'Vestuário'.
+SELECT C.nome 
+FROM CLIENTES C INNER JOIN VENDAS V ON (C.id_cliente = V.id_cliente)
+INNER JOIN PRODUTOS P ON (V.id_produto = P.id_produto) 
+INNER JOIN DEPARTAMENTOS D ON (P.id_departamento = D.id_departamento)
+WHERE nome_departamento IN ('Vestuário');
+
+-- VERSÃO SOMENTE COM IN -> VERIFICAR!!!
+SELECT nome
+FROM CLIENTES
+WHERE id_cliente IN (
+	SELECT id_cliente
+	FROM VENDAS
+	WHERE id_produto IN (
+		SELECT id_produto
+		FROM PRODUTOS
+		WHERE id_departamento IN (
+			SELECT id_departamento
+			FROM DEPARTAMENTOS
+			WHERE nome_departamento = 'Vestuário'
+		)
+	)
+);
+
+-- 2 - [NOT IN] Utilizando uma subconsulta, encontre o nome dos clientes que ainda não realizaram nenhuma compra na loja.
+SELECT C.nome 
+FROM CLIENTES C
+WHERE C.id_cliente NOT IN (SELECT V.id_cliente FROM VENDAS V);
+
+-- 3 - [NOT IN] Nomes dos produtos que nunca foram vendidos 
+-- (não possuem registros na tabela de vendas).
+SELECT nome
+FROM PRODUTOS
+WHERE id_produto NOT IN (SELECT id_produto FROM VENDAS);
+
+-- 4 - [Operador de Comparação] 
+-- Descubra o nome e o preço do produto mais caro da loja usando uma subconsulta.
+SELECT nome, preco 
+FROM PRODUTOS
+WHERE preco >= ALL(SELECT preco FROM PRODUTOS);
+
+-- 5 - [Operador de Comparação] 
+-- Nomes e limites de crédito dos clientes 
+-- cujo limite de crédito seja estritamente superior à média de limite de 
+-- crédito de todos os clientes cadastrados.
+SELECT nome, limite_credito
+FROM CLIENTES
+WHERE limite_credito > ALL(SELECT AVG(limite_credito) FROM CLIENTES);
+
+-- 6 - Nomes e preços dos produtos que são mais caros do que 
+-- TODOS os produtos do departamento de 'Móveis' (id_departamento = 2).
+SELECT nome, preco
+FROM PRODUTOS 
+WHERE preco > ALL(SELECT preco FROM PRODUTOS WHERE id_departamento = 2);
+
+-- 7 - Encontre o nome dos clientes que possuem um limite de crédito inferior a 
+-- QUALQUER cliente do estado de São Paulo ('SP'). (Dica: o limite deve ser menor que o maior limite de SP).
+SELECT nome 
+FROM CLIENTES 
+WHERE limite_credito < ANY(SELECT limite_credito FROM CLIENTES WHERE estado = 'SP');
+
+-- [!!!] 8 - Liste os nomes dos produtos cujo preço seja igual ao de 
+-- QUALQUER produto que já foi comprado pela cliente 'Ana Silva' (id_cliente = 1).
+SELECT nome
+FROM PRODUTOS 
+WHERE preco = ANY(
+	SELECT preco 
+	FROM PRODUTOS
+	P INNER JOIN VENDAS V ON (P.id_produto = V.id_produto) 
+	WHERE V.id_cliente = 1
+);
+
+SELECT nome
+FROM PRODUTOS 
+WHERE preco = ANY(
+	SELECT preco 
+	FROM PRODUTOS
+	WHERE id_produto IN (
+		SELECT 
+		FROM VENDAS V)
+);
+
+
+-- 9 - [Correlacionada] 
+-- Retorne o nome e o preço dos produtos que custam mais caro que a 
+-- média de preço dos produtos do seu próprio departamento.
+SELECT nome, preco 
+FROM PRODUTOS P1
+WHERE preco > (
+	SELECT AVG(preco) 
+	FROM PRODUTOS P2
+	WHERE P1.id_departamento = P2.id_departamento
+)
+
+-- 10 - [Subconsulta no FROM / Operador >] 
+-- Liste o id e o nome dos clientes  
+-- compraram uma quantidade total de itens superior a 3 
+-- unidades (somando todas as suas compras).
+SELECT id_cliente, nome
+FROM CLIENTES WHERE id_cliente IN VENDAS);
