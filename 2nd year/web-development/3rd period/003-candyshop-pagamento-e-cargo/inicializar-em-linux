@@ -1,0 +1,26 @@
+|[1] Abrir PgAdmin e criar server |
+--------------------------------------------------------------
+a. name: candyshopServer
+b. host: localhost
+c. password: postgres
+d. save password ativado
+e. Criar novo usuário
+nome: radames
+senha: Lageado001.
+Com todos os privilégios
+
+f. Criar novo banco de dados
+g. nome: candyshop
+h. Executar o dump no query tool
+
+
+|[2] Instalar dependências do node.js |
+--------------------------------------------------------------
+npm install cors dotenv express multer pg sharp
+
+
+|[3] Inicializar server COM O TERMINAL NA PASTA BACKEND |
+--------------------------------------------------------------
+node server.js
+
+

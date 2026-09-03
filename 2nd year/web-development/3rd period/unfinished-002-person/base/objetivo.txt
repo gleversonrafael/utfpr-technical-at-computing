@@ -1,9 +1,0 @@
-Criar CRUD completo com foto para cada Pessoa.
-
-
-CREATE TABLE produto (
-    id VARCHAR(15) PRIMARY KEY,
-    nome VARCHAR(50),
-    dataNascimento DATE,
-    nomeDaMae VARCHAR(50)
-);
