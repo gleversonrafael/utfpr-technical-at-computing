@@ -9,6 +9,7 @@ const { query } = require('./database');
 // Importa as rotas
 const produtoRoutes = require('./routes/produtoRoutes');
 const unidadeMedidaRoutes = require('./routes/unidadeMedidaRoutes');
+const formaPagamentoRoutes = require("./routes/formaPagamentoRoutes");
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use('/imagens', express.static(path.join(__dirname, '../imagens')));
 // Definir Rotas
 app.use('/produto', produtoRoutes);
 app.use('/unidade_medida', unidadeMedidaRoutes);
-app.use('/forma_pagamento', unidadeMedidaRoutes);
+app.use('/forma_pagamento', formaPagamentoRoutes);
 
 const PORT = process.env.PORT || 3001;
 
