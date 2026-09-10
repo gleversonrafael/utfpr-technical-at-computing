@@ -1,32 +1,31 @@
 const URL_API = 'http://localhost:3001';
 
 let oQueEstaFazendo = '';
-let unidadeMedida = null;
+let cargo = null;
 bloquearAtributos(true);
 
 async function procurePorChavePrimaria(chave) {
     try {
-        const resposta = await fetch(`${URL_API}/unidade_medida/${chave}`);
+        const resposta = await fetch(`${URL_API}/cargo/${chave}`);
         const data = await resposta.json();
-        return data.sucesso ? data.unidade : null;
+        return data.sucesso ? data.cargo : null;
     } catch (erro) {
         return null;
     }
 }
 
 async function procure() {
-    const id_unidade_medida = document.getElementById("inputId_unidade_medida").value.trim().toUpperCase();
-    if (!id_unidade_medida || id_unidade_medida.length > 2) {
-        mostrarAviso("O ID/Sigla deve conter de 1 a 2 caracteres (ex: KG, UN).");
+    const id_cargo = parseInt(document.getElementById("inputId_cargo").value, 10);
+    if (isNaN(id_cargo)) {
+        mostrarAviso("O ID do Cargo não pode ser vazio e deve ser um número.");
         return;
     }
 
-    document.getElementById("inputId_unidade_medida").value = id_unidade_medida;
-    unidadeMedida = await procurePorChavePrimaria(id_unidade_medida);
+    cargo = await procurePorChavePrimaria(id_cargo);
     oQueEstaFazendo = '';
     
-    if (unidadeMedida) {
-        mostrarDadosUnidade(unidadeMedida);
+    if (cargo) {
+        mostrarDadosCargo(cargo);
         visibilidadeDosBotoes('inline', 'none', 'inline', 'inline', 'none');
         mostrarAviso("Achou no banco, pode alterar ou excluir");
     } else {
@@ -40,7 +39,7 @@ function inserir() {
     bloquearAtributos(false);
     visibilidadeDosBotoes('none', 'none', 'none', 'none', 'inline');
     oQueEstaFazendo = 'inserindo';
-    mostrarAviso("INSERINDO - Digite o nome da unidade e clique em salvar");
+    mostrarAviso("INSERINDO - Digite o nome do cargo e clique em salvar");
 }
 
 function alterar() {
@@ -58,35 +57,37 @@ function excluir() {
 }
 
 async function salvar() {
-    const id_forma_pagamento = document.getElementById("inputId_unidade_medida").value.trim().toUpperCase();
-    const nome_forma_pagamento = document.getElementById("inputNome_unidade_medida").value;
+    const id_cargo = parseInt(document.getElementById("inputId_cargo").value, 10);
+    const nome_cargo = document.getElementById("inputNome_cargo").value.trim();
 
-    const dadosFormaPagamento = { id_forma_pagamento, nome_forma_pagamento };
+    if (isNaN(id_cargo)) {
+        mostrarAviso("O ID do cargo deve ser um número válido.");
+        return;
+    }
+
+    const dadosCargo = { id_cargo, nome_cargo };
 
     try {
         if (oQueEstaFazendo === 'inserindo') {
-            const resp = await fetch (`${URL_API}/forma_pagamento`,
-                {
-                    method: 'POST',
-                    headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify(dadosFormaPagamento)
-                }
-            )
-
-            data = await resp().json();
-
+            const resp = await fetch(`${URL_API}/cargo`, { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(dadosCargo) 
+            });
+            const data = await resp.json();
             if (!data.sucesso) return mostrarAviso(data.mensagem);
             mostrarAviso("Inserido no Banco de Dados com sucesso!");
-
         } else if (oQueEstaFazendo === 'alterando') {
-            const resp = await fetch(`${URL_API}/unidade_medida/${id_unidade_medida}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dadosFormaPagamento) });
-
+            const resp = await fetch(`${URL_API}/cargo/${id_cargo}`, { 
+                method: 'PUT', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(dadosCargo) 
+            });
             const data = await resp.json();
             if (!data.sucesso) return mostrarAviso(data.mensagem);
             mostrarAviso("Alterado no Banco de Dados com sucesso!");
-
         } else if (oQueEstaFazendo === 'excluindo') {
-            const resposta = await fetch(`${URL_API}/unidade_medida/${id_unidade_medida}`, { method: 'DELETE' });
+            const resposta = await fetch(`${URL_API}/cargo/${id_cargo}`, { method: 'DELETE' });
             const data = await resposta.json();
             if (!data.sucesso) {
                 mostrarAviso(data.mensagem || "Erro ao excluir no servidor.");
@@ -97,7 +98,7 @@ async function salvar() {
 
         visibilidadeDosBotoes('inline', 'none', 'none', 'none', 'none');
         limparAtributos();
-        document.getElementById("inputId_unidade_medida").value = "";
+        document.getElementById("inputId_cargo").value = "";
         listar();
     } catch (erro) {
         mostrarAviso("Erro ao efetuar operação no servidor.");
@@ -106,15 +107,17 @@ async function salvar() {
 
 async function listar() {
     try {
-        const resposta = await fetch(`${URL_API}/unidade_medida/listar`);
+        const resposta = await fetch(`${URL_API}/cargo/listar`);
+
+       
         const data = await resposta.json();
-        
+       // alert("teste "+stringify(dada))
         if (data.sucesso) {
             let texto = "";
-            for (let linha of data.unidades) {
-                texto += `<b>[${linha.id_unidade_medida}]</b> - ${linha.nome_unidade_medida}<br>`;
+            for (let linha of data.cargos) {
+                texto += `<b>[${linha.id_cargo}]</b> - ${linha.nome_cargo}<br>`;
             }
-            document.getElementById("outputSaida").innerHTML = texto || "Nenhuma unidade de medida cadastrada.";
+            document.getElementById("outputSaida").innerHTML = texto || "Nenhum cargo cadastrado.";
         } else {
             document.getElementById("outputSaida").innerHTML = `Erro no banco: ${data.mensagem}`;
         }
@@ -135,22 +138,22 @@ function mostrarAviso(mensagem) {
     document.getElementById("divAviso").innerHTML = mensagem;
 }
 
-function mostrarDadosUnidade(u) {
-    document.getElementById("inputId_unidade_medida").value = u.id_unidade_medida;
-    document.getElementById("inputNome_unidade_medida").value = u.nome_unidade_medida;
+function mostrarDadosCargo(u) {
+    document.getElementById("inputId_cargo").value = u.id_cargo;
+    document.getElementById("inputNome_cargo").value = u.nome_cargo;
     bloquearAtributos(true);
 }
 
 function limparAtributos() {
-    unidadeMedida = null;
+    cargo = null;
     oQueEstaFazendo = '';
-    document.getElementById("inputNome_unidade_medida").value = "";
+    document.getElementById("inputNome_cargo").value = "";
     bloquearAtributos(true);
 }
 
 function bloquearAtributos(soLeitura) {
-    document.getElementById("inputId_unidade_medida").readOnly = !soLeitura;
-    document.getElementById("inputNome_unidade_medida").readOnly = soLeitura;
+    document.getElementById("inputId_cargo").readOnly = !soLeitura;
+    document.getElementById("inputNome_cargo").readOnly = soLeitura;
 }
 
 function visibilidadeDosBotoes(btP, btI, btA, btE, btS) {

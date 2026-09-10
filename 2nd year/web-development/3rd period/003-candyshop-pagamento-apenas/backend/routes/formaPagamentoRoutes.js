@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const formaPagamentoController = require("../controllers/formaPagamentoController")
 
-router.get('/listar', formaPagamentoController.listarFormasPagamento);
+router.get('/listar', formaPagamentoController.listarFormaPagamento);
 router.get('/:id', formaPagamentoController.obterFormaPagamento);
 router.post('/', formaPagamentoController.criarFormaPagamento);
 router.put('/:id', formaPagamentoController.atualizarFormaPagamento);

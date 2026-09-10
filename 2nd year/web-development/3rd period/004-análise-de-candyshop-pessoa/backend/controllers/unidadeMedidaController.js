@@ -1,13 +1,13 @@
 const { query } = require('../database');
 
 // Listar todas as unidades de medida
-exports.listarFormasPagamento = async (req, res) => {
+exports.listarUnidadesMedida = async (req, res) => {
     try {
-        const result = await query('SELECT * FROM public.forma_pagamento ORDER BY id_forma_pagamento');
+        const result = await query('SELECT * FROM public.unidade_medida ORDER BY id_unidade_medida');
         res.json({ sucesso: true, unidades: result.rows });
     } catch (error) {
-        console.error('Erro ao listar formas de pagamento:', error);
-        res.status(500).json({ sucesso: false, mensagem: 'Erro ao listar formas de pagamento.' });
+        console.error('Erro ao listar unidades de medida:', error);
+        res.status(500).json({ sucesso: false, mensagem: 'Erro ao listar unidades de medida.' });
     }
 };
 
