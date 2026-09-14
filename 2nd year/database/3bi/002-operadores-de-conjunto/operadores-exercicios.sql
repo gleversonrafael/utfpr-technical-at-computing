@@ -68,6 +68,33 @@ ON (P.id_produto = V.id_produto)
 );
 
 
--- 7 - [UNION ALL vs UNION] Crie uma consulta que retorne os IDs de todos os clientes que compraram no dia '2023-11-04' e una com os IDs dos clientes que compraram no dia '2023-11-06'. Faça uma versão com UNION (que remove duplicatas) e outra com UNION ALL (que mantém duplicatas) para notar a diferença, já que o cliente 1 comprou em ambas as datas.
+-- 7 - [UNION ALL vs UNION] Crie uma consulta que retorne os IDs de todos os clientes que 
+-- compraram no dia '2023-11-04' e una com os IDs dos clientes que compraram no dia '2023-11-06'. 
+-- Faça uma versão com UNION (que remove duplicatas) e outra com UNION ALL 
+-- (que mantém duplicatas) para notar a diferença, 
+-- já que o cliente 1 comprou em ambas as datas.
+(SELECT id_cliente FROM VENDAS
+WHERE data_venda = '2023-11-06')
+UNION 
+(SELECT id_cliente FROM VENDAS
+WHERE data_venda = '2023-11-06');
 
--- 8 - [MISTO] Construa uma consulta que retorne os nomes dos produtos do departamento de 'Eletrônicos' UNIDOS aos nomes dos produtos do departamento de 'Móveis', EXCETO os produtos cujo preço seja superior a R$ 3000.00.
+(SELECT id_cliente FROM VENDAS
+WHERE data_venda = '2023-11-06')
+UNION ALL 
+(SELECT id_cliente FROM VENDAS
+WHERE data_venda = '2023-11-06');
+
+
+-- 8 - [MISTO] Construa uma consulta que retorne os nomes dos produtos do departamento de 'Eletrônicos' (id = 1)
+-- UNIDOS aos nomes dos produtos do departamento de 'Móveis' (id = 2), EXCETO os produtos cujo preço seja superior a R$ 3000.00.
+(SELECT nome FROM PRODUTOS
+WHERE id_departamento = 1
+
+UNION
+SELECT nome FROM PRODUTOS
+WHERE id_departamento = 2
+)
+EXCEPT 
+SELECT nome FROM PRODUTOS
+WHERE preco > 3000;
