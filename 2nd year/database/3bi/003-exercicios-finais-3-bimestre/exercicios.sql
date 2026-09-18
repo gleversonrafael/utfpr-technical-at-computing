@@ -160,6 +160,7 @@ GROUP BY D.id_departamento;
 -- EXERCÍCIO 9: Encontre o nome e o preço do produto mais caro da loja inteira
 -- utilizando uma subconsulta com a função MAX.
 
+
 -- EXERCÍCIO 10: Liste os clientes (nome e estado) que NÃO realizaram nenhuma compra.
 -- Utilize subconsulta com NOT IN.
 
