@@ -160,42 +160,162 @@ GROUP BY D.id_departamento;
 -- EXERCÍCIO 9: Encontre o nome e o preço do produto mais caro da loja inteira
 -- utilizando uma subconsulta com a função MAX.
 
+-----------------------------------------------------------------------------------------------
+-- !! FEITO EM CASA
 
 -- EXERCÍCIO 10: Liste os clientes (nome e estado) que NÃO realizaram nenhuma compra.
 -- Utilize subconsulta com NOT IN.
 
+-----------------------------------------------------------------------------------------------
+-- !! FEITO EM CASA
+
 -- EXERCÍCIO 11: Liste o nome dos clientes e a soma total gasta por cada um deles,
 -- considerando apenas os clientes que gastaram mais de R$ 1.000,00 no total.
+
+-----------------------------------------------------------------------------------------------
+-- !! FEITO EM CASA
 
 -- EXERCÍCIO 12: Utilizando subconsulta correlacionada, liste os produtos cujo preço
 -- seja superior à média de preço dos produtos do seu próprio departamento.
 
+-----------------------------------------------------------------------------------------------
+-- !! FEITO EM CASA
+
 -- EXERCÍCIO 13: Encontre o nome dos clientes que compraram o produto 'Notebook Pro'
 -- utilizando uma subconsulta encadeada (sem JOIN direto com a tabela produtos).
 
+-- !! FEITO EM CASA
+-----------------------------------------------------------------------------------------------
+
 -- EXERCÍCIO 14: Liste os nomes dos departamentos que possuem produtos com preço
 -- superior a R$ 2.000,00, utilizando uma subconsulta com a cláusula IN.
+
+-----------------------------------------------------------------------------------------------
+-- !! FEITO EM CASA
 
 -- EXERCÍCIO 15: Crie um relatório consolidado de produtos vendidos que combine
 -- (via UNION ALL) duas consultas: uma listando produtos com preço acima de R$ 2.000,00
 -- e outra listando produtos que tiveram quantidade vendida em uma única venda maior que 5.
 -- (Traga o nome do produto e a origem/critério descrita em texto).
 
+-- !! FEITO EM CASA
+-----------------------------------------------------------------------------------------------
+
 -- EXERCÍCIO 16: Calcule a média da quantidade de itens vendidos por venda para cada
 -- cliente. Mostre o nome do cliente e a média arredondada, mas exiba apenas aqueles
 -- cuja média de quantidade seja maior ou igual a 2.
+
+-- Dificuldade: [C]
+
+SELECT nome, AVG(quantidade) AS media_quantidade
+FROM CLIENTES C JOIN VENDAS V
+ON (C.id_cliente = V.id_cliente)
+GROUP BY C.id_cliente
+HAVING AVG(quantidade) >= 2;
+
 
 -- EXERCÍCIO 17: Utilizando o operador EXCEPT (ou MINUS), liste os nomes dos clientes
 -- que compraram no departamento 'Eletrônicos' EXCETO aqueles que também compraram
 -- no departamento 'Móveis'.
 
+-- Dificuldade: [D]
+(
+	SELECT nome
+	FROM CLIENTES 
+	WHERE id_cliente IN 
+(
+		SELECT id_cliente
+		FROM VENDAS V JOIN PRODUTOS P
+		ON (V.id_produto = P.id_produto)
+		JOIN DEPARTAMENTOS D ON
+		(P.id_departamento = D.id_departamento)
+		WHERE nome_departamento = 'Eletrônicos'
+)
+)
+EXCEPT
+(
+	SELECT nome
+	FROM CLIENTES C JOIN VENDAS V
+	ON (C.id_cliente = V.id_cliente)
+	JOIN PRODUTOS P
+	ON (V.id_produto = P.id_produto)
+	JOIN DEPARTAMENTOS D 
+	ON (P.id_departamento = D.id_departamento)
+	WHERE nome_departamento = 'Móveis'
+);
+
+
 -- EXERCÍCIO 18: Encontre o departamento que gerou a maior receita total consolidada.
 -- Utilize subconsulta e agrupamento.
+
+-- Dificuldade: [B]
+-- Dá para simplificar?
+SELECT 
+	id_departamento, 
+	nome_departamento
+FROM (
+	-- DEPARTAMENTOS E SUAS RECEITAS
+	SELECT 
+		D.id_departamento, 
+		nome_departamento, 
+		SUM(valor_total) AS receita_total
+		
+	FROM DEPARTAMENTOS D 
+	JOIN PRODUTOS P 
+		ON (D.id_departamento = P.id_departamento)
+	JOIN VENDAS V 
+		ON (V.id_produto = P.id_produto)
+	GROUP BY D.id_departamento
+) 
+WHERE receita_total >= ALL(
+	-- DEPARTAMENTOS E SUAS RECEITAS
+	SELECT 
+		SUM(valor_total) AS receita_total
+		
+	FROM DEPARTAMENTOS D 
+	JOIN PRODUTOS P 
+		ON (D.id_departamento = P.id_departamento)
+	JOIN VENDAS V 
+		ON (V.id_produto = P.id_produto)
+	GROUP BY D.id_departamento
+);
+
 
 -- EXERCÍCIO 19: Liste todos os estados dos clientes que realizaram compras cujo
 -- valor total da venda individual foi superior a R$ 2.000,00, removendo eventuais
 -- repetições com UNION (ou DISTINCT, mas utilizando UNION para demonstrar consolidação).
 
+-- DIficuldade: [D]
+(
+	SELECT estado
+	FROM CLIENTES C
+	JOIN VENDAS V
+		ON (C.id_cliente = V.id_cliente)
+	WHERE valor_total > 2000
+)
+UNION
+(
+	SELECT estado
+	FROM CLIENTES C
+	JOIN VENDAS V
+		ON (C.id_cliente = V.id_cliente)
+	WHERE valor_total > 2000
+);
+
+
 -- EXERCÍCIO 20: Desafio Avançado: Liste o nome do cliente, o nome do produto e o
 -- valor total da venda, apenas para aquelas vendas cujo valor total seja superior
 -- à média de valor de todas as vendas registradas na tabela VENDAS.
+
+-- Surpreendentemente [D]
+SELECT nome, nome_produto, valor_total
+FROM CLIENTES C
+JOIN VENDAS V
+	ON (C.id_cliente = V.id_cliente)
+JOIN PRODUTOS P
+	ON (V.id_produto = P.id_produto)
+WHERE valor_total > 
+(
+	SELECT AVG(valor_total)
+	FROM VENDAS
+)
