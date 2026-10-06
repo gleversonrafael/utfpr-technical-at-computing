@@ -1,0 +1,156 @@
+--------------------------------------------------------------------
+-- CRIAÇÕES
+--------------------------------------------------------------------
+DROP TABLE IF EXISTS MATRICULA, DISCIPLINA, PROFESSOR, ALUNO;
+
+CREATE TABLE ALUNO (
+	id_aluno INT PRIMARY KEY, 
+	nome VARCHAR(100) NOT NULL,
+	curso VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE PROFESSOR(
+	id_professor INT PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	departamento VARCHAR(100) NOT NULL,
+	salario DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE DISCIPLINA(
+	id_disciplina INT PRIMARY KEY,
+	nome_disciplina VARCHAR(100) NOT NULL,
+	departamento VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE MATRICULA(
+	id_aluno INT NOT NULL,
+	id_disciplina INT NOT NULL,
+	ano INT NOT NULL,
+	semestre INT NOT NULL,
+	nota DECIMAL(4, 2),
+	PRIMARY KEY(id_aluno, id_disciplina, ano, semestre),
+	FOREIGN KEY(id_aluno) REFERENCES ALUNO(id_aluno),
+	FOREIGN KEY(id_disciplina) REFERENCES DISCIPLINA(id_disciplina)
+);
+
+--------------------------------------------------------------------
+-- INSERÇÕES
+--------------------------------------------------------------------
+
+-- ALUNO
+INSERT INTO ALUNO (id_aluno, nome, curso) VALUES
+(1, 'Ana Silva', 'Medicina'),
+(2, 'Bruno Souza', 'Computação'),
+(3, 'Carla Oliveira', 'Medicina'),
+(4, 'Daniel Santos', 'Engenharia'),
+(5, 'Eduarda Lima', 'Medicina'),
+(6, 'Felipe Costa', 'Administração'),
+(7, 'Gabriela Alves', 'Computação'),
+(8, 'Henrique Rocha', 'Medicina'),
+(9, 'Isabela Martins', 'Direito'),
+(10, 'João Pereira', 'Engenharia');
+
+
+-- PROFESSOR
+INSERT INTO PROFESSOR (id_professor, nome, departamento, salario) VALUES
+(1, 'Carlos Mendes', 'Medicina', 8500.00),
+(2, 'Mariana Souza', 'Computação', 7200.00),
+(3, 'Ricardo Oliveira', 'Engenharia', 7800.00),
+(4, 'Patrícia Santos', 'Administração', 6500.00),
+(5, 'Fernando Lima', 'Direito', 6900.00),
+(6, 'Juliana Costa', 'Medicina', 9100.00),
+(7, 'Rafael Alves', 'Computação', 7500.00),
+(8, 'Camila Rocha', 'Engenharia', 8200.00),
+(9, 'André Martins', 'Administração', 6700.00),
+(10, 'Larissa Pereira', 'Direito', 7100.00);
+
+
+-- DISCIPLINA
+INSERT INTO DISCIPLINA (id_disciplina, nome_disciplina, departamento) VALUES
+(1, 'Banco de Dados', 'Computação'),
+(2, 'Algoritmos', 'Computação'),
+(3, 'Anatomia', 'Medicina'),
+(4, 'Fisiologia', 'Medicina'),
+(5, 'Cálculo I', 'Engenharia'),
+(6, 'Estruturas de Dados', 'Computação'),
+(7, 'Direito Constitucional', 'Direito'),
+(8, 'Administração Geral', 'Administração'),
+(9, 'Sistemas Operacionais', 'Computação'),
+(10, 'Engenharia de Software', 'Computação');
+
+
+-- MATRICULA
+INSERT INTO MATRICULA (id_aluno, id_disciplina, ano, semestre, nota) VALUES
+(1, 1, 2026, 1, 8.50),
+(2, 1, 2026, 1, 9.00),
+(3, 2, 2026, 1, 7.50),
+(4, 5, 2026, 1, 8.00),
+(5, 3, 2026, 1, 9.50),
+(6, 8, 2026, 1, 7.00),
+(7, 6, 2026, 1, 8.75),
+(8, 4, 2026, 1, 9.00),
+(9, 7, 2026, 1, 8.25),
+(10, 10, 2026, 1, 7.80);
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+-- QUESTÕES
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+--------------------------------------------------------------------
+-- Questão 3
+--------------------------------------------------------------------
+-- Escreva uma consulta SQL que liste o nome_disciplina das disciplinas que NUNCA tiveram matrículas de alunos do curso de 'Medicina'
+-- Alunos matriculados em cursos que não sejam de medicina.
+-- Mostre disciplinas que têm alunos matriculados, e retire os de medicina
+SELECT *
+FROM DISCIPLINA D 
+JOIN MATRICULA M ON
+	(D.id_disciplina = M.id_disciplina)
+JOIN ALUNO A ON
+	(M.id_aluno = A.id_aluno)
+WHERE curso != 'Medicina';
+
+--
+SELECT nome, curso
+FROM DISCIPLINA D 
+JOIN MATRICULA M ON
+	(D.id_disciplina = M.id_disciplina)
+JOIN ALUNO A ON
+	(M.id_aluno = A.id_aluno)
+WHERE A.id_aluno NOT IN (
+	SELECT A.id_aluno
+	FROM DISCIPLINA D 
+	JOIN MATRICULA M ON
+		(D.id_disciplina = M.id_disciplina)
+	JOIN ALUNO A ON 
+		(M.id_aluno = A.id_aluno)
+	WHERE curso = 'Medicina'
+);
+
+
+--------------------------------------------------------------------
+-- Questão 7
+--------------------------------------------------------------------
+-- Escreva uma consulta SQL que liste o nome e o curso dos alunos que possuem
+-- média geral de notas superior a 8,0 em seu histórico
+-- mas que NÃO tenham cursado nenhuma disciplina oferecida pelo departamento de 'História'
+-- (
+--	SELECT nome, curso
+--	FROM ALUNO A 
+--	JOIN MATRICULA M ON
+--		(A.id_aluno = M.id_aluno)
+--	GROUP BY A.id_aluno
+--	HAVING AVG(nota) > 8
+--)
+--EXCEPT 
+--(
+--	SELECT nome, curso
+--	FROM ALUNO A 
+--	JOIN MATRICULA M ON
+--	(A.id_aluno = M.id_aluno)
+--	JOIN DISCIPLINA D ON 
+--	(M.id_disciplina = D.id_disciplina)
+--	WHERE departamento = 'História'
+--);
